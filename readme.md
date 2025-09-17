@@ -2,7 +2,7 @@
 
 1. **Clone or Download the Repository**
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/Suprefuner/rl-dev-helper.git
 
 2. **Open Chrome Extension Settings**
 - Go to chrome://extensions/ in your browser.
