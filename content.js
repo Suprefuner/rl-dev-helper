@@ -4,6 +4,7 @@ chrome.storage.local.get(["isActive"], (result) => {
   window.rlcDevHelper = true
 
   const isPLP = !!$(".plp-content-slot").length
+  
   let caid = isPLP
     ? ":where(.plp-content-slot, .ingrid)"
     : "#main .open-html-content:has(.rlc-creative_v3)"
@@ -183,17 +184,6 @@ chrome.storage.local.get(["isActive"], (result) => {
       )
     })
 
-    // $(".rlc-header").each((i, el) => {
-    //   if ($(el).html().includes("rlc-ab-container")) return
-    //   $(el).append(
-    //     createInfoContainer(`
-    //       ${$(el).text()}:<br>
-    //       ${getFontDetails(el)}<br>
-    //     `,
-    //       'style="--_translateX: -50%; --_translateY: -12px;"'
-    //     )
-    //   )
-    // })
     $(".rlc-header").each((i, el) => {
       if ($(el).html().includes("rlc-ab-container")) return
       $(el).append(
@@ -415,7 +405,7 @@ function generateHotspotInfoContainer() {
 
     additionalCSS += '"'
 
-    $(el).html(createInfoContainer(getAB(el), additionalCSS))
+    $(el).html(createInfoContainer(getLinkID(el), additionalCSS))
   })
 }
 
@@ -435,7 +425,7 @@ function generateBGLinkInfoContainer() {
       )
     }
     additionalCSS = '"'
-    $(el).append(createInfoContainer(getAB(el), additionalCSS))
+    $(el).append(createInfoContainer(getLinkID(el), additionalCSS))
   })
 }
 
@@ -459,18 +449,18 @@ function generateCTAInfoContainer() {
             CTAFont = fontFamily
           }
 
-          const abTagging = getAB(el)
+          const linkID = getLinkID(el)
 
           html += `
             ${$(el).text()}: <br>
             ${!isSameFont ? getFontDetails(el) + "<br>" : ""}
           `
 
-          if (abTagging) {
+          if (linkID) {
             html += `
               <span class='rlc-ab-divider' style='opacity: 0.5;'></span>
-              🔍 AB Tagging: <br>
-              ${abTagging} <br>
+              🔍 ID:<br>
+              ${linkID} <br>
               <span class='rlc-ab-divider'></span>
             `
           }
@@ -488,7 +478,7 @@ function generateCTAInfoContainer() {
         if (shouldIgnoreLink(el)) return
         addPositionToEl(el)
         addZIndexToCarousel(el)
-        const abTagging = getAB(el)
+        const linkID = getLinkID(el)
         let adContainerCSS = 'style="'
 
         if ($(linksContainer).width() > $(window).width() / 1.2) {
@@ -545,7 +535,7 @@ function generateCTAInfoContainer() {
           adContainerCSS += "top: 100%; --_translateY: 12px;"
         }
 
-        if (checkABTooLong(abTagging)) {
+        if (checkABTooLong(linkID)) {
           adContainerCSS += `--_link-width: ${$(linksContainer).width()}px;`
         }
 
@@ -560,11 +550,11 @@ function generateCTAInfoContainer() {
             ${getFontDetails(el)} <br>
         `
 
-        if (abTagging) {
+        if (linkID) {
           html += `
             <span class='rlc-ab-divider'></span>
-            🔍 AB Tagging: <br>
-            ${abTagging}
+            🔍 ID: <br>
+            ${linkID}
           `
         }
 
@@ -609,7 +599,7 @@ function generateQuickShopInfoContainer() {
 
     adContainerCSS += '"'
 
-    $(el).append(createInfoContainer(getAB(el), adContainerCSS))
+    $(el).append(createInfoContainer(getLinkID(el), adContainerCSS))
   })
 }
 
@@ -647,8 +637,8 @@ function updateDevItemStatus(el) {
   $(el).attr("data-status", isShow ? "hide" : "show")
 }
 
-function getAB(el) {
-  if (!$(el).is("a") || !el.href.includes("?")) {
+function getLinkID(el) {
+  if (!$(el).is("a")) {
     return ""
   }
 
@@ -656,9 +646,15 @@ function getAB(el) {
     ? decodeURIComponent(el.href.split(".co")[1])
     : decodeURIComponent(el.href.split(".com")[1])
 
-  let [cgid, tagging] = urlPart.split("?")
-  let pid = null
-  let productColor = null
+  let cgid = null
+  let tagging = null
+
+  if (urlPart.includes("?")) {
+    [cgid, tagging] = urlPart?.split('?')
+  } else {
+    cgid = urlPart
+  }
+
 
   if (cgid?.includes("search")) {
     cgid = `<span class='rlc-dev-err'>${urlPart.split("search?")[1].split("&")[0]
@@ -666,30 +662,33 @@ function getAB(el) {
   }
 
   // PID handling
-  if (cgid?.includes(".html")) {
-    pid = cgid.split("-").at(-1).split(".html")[0]
-    productColor = decodeURIComponent(
-      urlPart.split("?")[1].split("?")[0].split("&")[0].split("colorname=")[1]
-    )
-    productColor = productColor === "undefined" && null
+  let pid = null
+  let productColor = null
+
+  if (urlPart?.includes(".html")) {
+    if (urlPart?.includes('?')) {
+      const productInfo = urlPart.split('.html')[1]
+      pid = productInfo.split('_')[0]?.replace('?dwvar', '')
+      productColor = productInfo.split('_')[1]?.replace('colorname=', '')
+    } else {
+      pid = urlPart.split('-').at(-1).replace('.html', '')
+    }
     cgid = null
   }
   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null
   const filterName = filter ? filter.split("&")[0].split("=")[1] : null
   const filterValue = filter ? filter.split("&")[1].split("=")[1] : null
-  const abTagging = urlPart?.includes("ab=") ? urlPart.split("ab=")[1] : null
 
   const outOfStock = !!$(el).closest(".notinstock").length
 
   return `
-    ${cgid ? "◻️ CGID: " + cgid + "<br>" : ""}
+    ${cgid ? cgid + "<br>" : ""}
     ${pid ? "◻️ PID: " + pid : ""}
     ${pid && outOfStock ? '<span class="rlc-dev-err">(Out of stock)</span>' : ""
     }
     ${pid ? "<br>" : ""}
     ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
     ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
-    ◻️ Tag: ${abTagging}
   `
 }
 
@@ -740,10 +739,46 @@ function checkTooManyLinks(container) {
 }
 
 function getFontDetails(el) {
-  return `
-   ◻️ family: ${window
+  const lang = $('html').attr('lang').split('_')[0].toLowerCase()
+  let isCorrectFontFamily = true
+  let fontFamily = window
       .getComputedStyle(el)
-      .getPropertyValue("font-family")} <br>
+      .getPropertyValue("font-family")
+
+  if (lang === 'en') {
+    if (
+      fontFamily.toLowerCase().includes('tc') ||
+      fontFamily.toLowerCase().includes('kr') ||
+      fontFamily.toLowerCase().includes('hiragino') 
+    ) {
+      isCorrectFontFamily = false
+    }
+  }
+
+  if (lang === 'ko') {
+    if (!fontFamily.toLowerCase().includes('kr')) {
+      isCorrectFontFamily = false
+    }
+  }
+
+  if (lang === 'ja') {
+    if (!fontFamily.toLowerCase().includes('hiragino')) {
+      isCorrectFontFamily = false
+    }
+  }
+
+  if (lang === 'zh') {
+    if (!fontFamily.toLowerCase().includes('tc')) {
+      isCorrectFontFamily = false
+    }
+  }
+
+  if (!isCorrectFontFamily) {
+    fontFamily = `<span class='rlc-dev-err'>${fontFamily}</span>`
+  }
+
+  return `
+   ◻️ family: ${fontFamily} <br>
    ◻️ size: ${window.getComputedStyle(el).getPropertyValue("font-size")}
   `
 }
@@ -840,7 +875,7 @@ function showVidUrl() {
   if (!$('.rlc-videocontainer').length) return
 
   $('.rlc-videocontainer').each((i, item) => {
-    const videoUrl = $(item).attr('data-video').replaceAll('\'', '"')
+    const videoUrl = $(item).attr('data-video').replaceAll('\'', '"').replaceAll('https:', '')
     const videoUrlJSON = JSON.parse(videoUrl)
     let html = `
       <div class="rlc-dev-video-container" data-video='${JSON.stringify(JSON.parse(videoUrl), null, 4)}'>
