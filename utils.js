@@ -8,10 +8,7 @@ function cleanUp() {
 
   $(document).off(".rlcDevHelper");
   
-  window.isPLP = undefined;
-  window.caid = undefined;
-  window.devHelperState = undefined;
-  window.helperList = undefined;
+  window._rlcDevHelper = false
 
   removeZIndexFromCarousel();
 }
@@ -51,6 +48,10 @@ function getFontDetails(el) {
     if (!fontFamily.toLowerCase().includes("tc")) {
       isCorrectFontFamily = false;
     }
+  }
+
+  if (!fontFamily.toLowerCase().includes(",")) {
+    isCorrectFontFamily = false;
   }
 
   if (!isCorrectFontFamily) {

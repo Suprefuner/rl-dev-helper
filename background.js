@@ -67,7 +67,6 @@ chrome.scripting.executeScript({
               target: { tabId: tab.id },
               func: () => {
                 window.cleanUp();
-                
                 window.rlcDevHelperLoaded = false;
               },
               world: "MAIN",

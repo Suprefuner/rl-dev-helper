@@ -1,3 +1,10 @@
+:root{
+  --_rlc-dev-black-bg: rgba(0, 0, 0, 0.5);
+  --_rlc-dev-navy: #041e3a;
+  --_rlc-dev-red: red;
+  --_rlc-dev-green: #057105;
+}
+
 .rlc-dev-helper {
   --_offset: 20px;
   --_btn-size: 80px;
@@ -15,7 +22,7 @@ button.rlc-btn--dev {
   padding: 6px;
   background-color: white !important;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
 }
 
@@ -27,7 +34,7 @@ button.rlc-btn--dev .rlc-image {
 
 .rlc-dev-helper[data-status="on"] button.rlc-btn--dev,
 button.rlc-btn--dev:hover {
-  box-shadow: 0 0 0 5px #041e3a;
+  box-shadow: 0 0 0 5px var(--_rlc-dev-navy);
   background-color: white !important;
 }
 
@@ -42,7 +49,7 @@ ul.rlc-dev-menu {
   transform: translateY(calc(var(--_btn-size) * -1 - 16px));
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px var(--_rlc-dev-black-bg);
 }
 
 .rlc-dev-helper[data-status="off"] .rlc-dev-menu {
@@ -59,7 +66,7 @@ ul.rlc-dev-menu {
   color: white;
   font-size: 16px;
   line-height: 2;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--_rlc-dev-black-bg);
   cursor: pointer;
   border-radius: 6px;
   transition: background-color 0.3s ease;
@@ -67,6 +74,13 @@ ul.rlc-dev-menu {
 
 li.rlc-dev-item {
   list-style-type: none !important;
+}
+
+.rlc-dev-item.rlc-disabled,
+.rlc-dev-item.rlc-disabled:hover{
+  cursor: auto;
+  background-color: #4f4f4f;
+  color: #a7a7a7;
 }
 
 .rlc-dev-item::before {
@@ -80,7 +94,7 @@ li.rlc-dev-item {
 
 .rlc-dev-item[data-state="on"],
 .rlc-dev-item:hover {
-  background-color: #041e3a;
+  background-color: var(--_rlc-dev-navy);
 }
 
 .rlc-ab-container {
@@ -92,9 +106,9 @@ li.rlc-dev-item {
   bottom: 100%;
   left: 50%;
 
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--_rlc-dev-black-bg);
   border-radius: 10px;
-  border: 1px solid #041e3a;
+  border: 1px solid var(--_rlc-dev-navy);
   backdrop-filter: blur(3px);
 
   font-family: "Founders Grotesk text Regular", Helvetica, Arial, sans-serif !important;
@@ -305,12 +319,12 @@ header[class^="rlc-catslider"] .rlc-ab-container {
 }
 
 .rlc-dev-err {
-  color: red;
+  color: var(--_rlc-dev-red);
   font-weight: bold;
 }
 
 .rlc-ab-container:has(.rlc-dev-err) {
-  outline: 2px solid red;
+  outline: 2px solid var(--_rlc-dev-red);
   outline-offset: 2px;
 }
 
@@ -324,7 +338,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
   margin-inline: auto;
   padding: 2px 8px;
 
-  background-color: black;
+  background-color: var(--_rlc-dev-black-bg);
   color: white;
   font-size: 14px;
   text-align: center;
@@ -335,8 +349,12 @@ header[class^="rlc-catslider"] .rlc-ab-container {
   cursor: copy;
 }
 
+.rlc-dev-color-container:hover{
+  background-color: black;
+}
+
 .rlc-dev-color-container[data-state="success"] {
-  background-color: rgb(5, 113, 5);
+  background-color: var(--_rlc-dev-green);
 }
 
 li.variations-attribute:nth-child(odd) .rlc-dev-color-container {
@@ -366,7 +384,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   padding: 10px 14px;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  border: 1px solid #041e3a;
+  border: 1px solid var(--_rlc-dev-navy);
   backdrop-filter: blur(3px);
 
   font-family: "Founders Grotesk text Regular", Helvetica, Arial, sans-serif !important;
@@ -417,7 +435,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 }
 
 .rlc-dev-icon[data-state="success"] {
-  background-color: rgb(5, 113, 5);
+  background-color: var(--_rlc-dev-green);
 }
 
 .rlc-dev-icon[data-action="copy"] {
@@ -447,7 +465,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   width: calc(100% - var(--_margin)) !important;
   height: calc(var(--_height) - var(--_margin)) !important;
   margin-inline: auto;
-  outline: 2px solid red;
+  outline: 2px solid var(--_rlc-dev-red);
   outline-offset: 10px;
 
   background-color: rgba(0, 0, 0, 0.3);
@@ -498,7 +516,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 }
 
 .rlc-dev-missing-image-header .rlc-dev-copy-all[data-state="success"] {
-  background-color: rgb(5, 113, 5);
+  background-color: var(--_rlc-dev-green);
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20640%20640%22%3E%3Cpath%20class%3D%22rlc-icon--success%22%20fill%3D%22white%22%20d%3D%22M530.8%20134.1C545.1%20144.5%20548.3%20164.5%20537.9%20178.8L281.9%20530.8C276.4%20538.4%20267.9%20543.1%20258.5%20543.9C249.1%20544.7%20240%20541.2%20233.4%20534.6L105.4%20406.6C92.9%20394.1%2092.9%20373.8%20105.4%20361.3C117.9%20348.8%20138.2%20348.8%20150.7%20361.3L252.2%20462.8L486.2%20141.1C496.6%20126.8%20516.6%20123.6%20530.9%20134z%22/%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
