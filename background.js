@@ -9,7 +9,7 @@ const whitelist = [
 ];
 
 function isValidUrl(url, list) {
-  return list.some(pattern => {
+  return list.some((pattern) => {
     const regex = new RegExp("^" + pattern.replace(/\*/g, ".*") + "$");
     return regex.test(url);
   });
@@ -27,67 +27,109 @@ chrome.action.onClicked.addListener((tab) => {
     const isActive = !result.isActive;
     chrome.storage.local.set({ isActive }, () => {
       chrome.action.setIcon({
-        path: isActive ? "active_logo.png" : "inactive_logo.png",
+        path: isActive ? "logo/active_logo.png" : "logo/inactive_logo.png",
         tabId: tab.id,
       });
 
       if (isActive) {
-        chrome.scripting.insertCSS({
-          target: { tabId: tab.id },
-          files: ["style.css"],
-        }, () => {
-          chrome.scripting.executeScript({
+        chrome.scripting.insertCSS(
+          {
             target: { tabId: tab.id },
-            files: ["jquery-3.7.1.min.js", "content.js"],
-          }, () => {
-            isProcessing = false;
-          });
-        })
-      } else {
-        chrome.scripting.removeCSS({
-          target: { tabId: tab.id },
-          files: ["styles.css"],
-        }, () => {
-          chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: () => {
-            if (typeof window.cleanUp === "function") {
-              window.cleanUp();
-            }
-            window.rlcDevHelperLoaded = false;
+            files: ["style.css"],
           },
-        }, () => {
-          isProcessing = false;
-          });
-        })
+          () => {
+            chrome.scripting.executeScript(
+              {
+                target: { tabId: tab.id },
+                files: ["utils.js", "content.js"],
+                world: "MAIN",
+              },
+              () => {
+                isProcessing = false;
+              }
+            );
+          }
+        );
+      } else {
+        chrome.scripting.removeCSS(
+          {
+            target: { tabId: tab.id },
+            files: ["style.css"],
+          },
+          () => {
+            chrome.scripting.executeScript(
+              {
+                target: { tabId: tab.id },
+                files: ["utils.js"],
+                world: "MAIN",
+              }, ()=>{
+chrome.scripting.executeScript({
+              target: { tabId: tab.id },
+              func: () => {
+                window.cleanUp();
+                
+                window.rlcDevHelperLoaded = false;
+              },
+              world: "MAIN",
+              }, () => {
+              isProcessing = false;
+            });
+          }
+        );
       }
-    });
+  )}});
   });
-  
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // if (changeInfo.status === "complete" && tab.active && isValidUrl(tab.url)) {
-  if (changeInfo.status === "complete" && tab.active && isValidUrl(tab.url, whitelist)) {
+  if (
+    changeInfo.status === "complete" &&
+    tab.active &&
+    isValidUrl(tab.url, whitelist)
+  ) {
     chrome.storage.local.set({ isActive: false }, () => {
       chrome.action.setIcon({
-        path: "inactive_logo.png",
+        path: "logo/inactive_logo.png",
         tabId: tabId,
       });
-      chrome.scripting.removeCSS({
-        target: { tabId: tabId },
-        files: ["styles.css"],
-      }, () => { 
-        chrome.scripting.executeScript({
-        target: { tabId: tabId },
-          func: () => {
-            if (typeof window.cleanUp === "function") {
-              window.cleanUp();
-            }
-            window.rlcDevHelperLoaded = false;
-          },
+      chrome.scripting.removeCSS(
+        {
+          target: { tabId: tabId },
+          files: ["style.css"],
+        },
+        () => {
+          chrome.scripting.executeScript({
+          target: { tabId: tabId },
+          files: ["utils.js"], // Inject utils.js for cleanUp
+          world: "MAIN",
+        }, () => {
+          chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            func: () => {
+              if (typeof window.cleanUp === "function") {
+                window.cleanUp();
+              } else {
+                // Fallback cleanup
+                const elements = document.querySelectorAll(
+                  ".rlc-dev-helper, .rlc-ab-container, .rlc-dev-color-container, " +
+                  ".rlc-dev-video-container, .rlc-dev-missing-image-container, .rlc-dev-missing-img"
+                );
+                elements.forEach(el => el.remove());
+                document.querySelectorAll(".rlc-carousel-dev-z-index").forEach(el => {
+                  el.style.zIndex = "";
+                  el.classList.remove("rlc-carousel-dev-z-index");
+                });
+                document.removeEventListener("click.rlcDevHelper");
+                document.removeEventListener("mouseover.rlcDevHelper");
+                document.removeEventListener("mouseout.rlcDevHelper");
+              }
+              window.rlcDevHelperLoaded = false;
+            },
+            world: "MAIN",
+          });
         });
-      })
+        }
+      );
     });
   }
 });
