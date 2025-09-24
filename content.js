@@ -282,8 +282,9 @@ function devBtnHandler(e) {
 function devItemHandler(e, helperList) {
   if (
     !e.target.closest(".rlc-dev-item") ||
-    $(e.target.closest(".rlc-dev-item")).hasClass('rlc-disabled')
-  ) return
+    $(e.target.closest(".rlc-dev-item")).hasClass("rlc-disabled")
+  )
+    return
 
   const index = $(e.target).attr("data-index")
   const item = helperList[index]
@@ -611,7 +612,7 @@ function getLinkID(el) {
 
   if (cgid?.includes("ab=")) {
     cgid = `<span class='rlc-dev-err'>ab=${
-      urlPart.split("ab=")[1].split('&')[0]
+      urlPart.split("ab=")[1].split("&")[0]
     }</span>`
   }
 
@@ -956,7 +957,7 @@ function hideVidUrl() {
 
 // MARK: Missing Image
 function checkMissingImage(caid) {
-  if(!window.hasCheckedMissingImage){
+  if (!window.hasCheckedMissingImage) {
     window.scrollTo({
       top: document.body.offsetHeight,
       left: 0,
@@ -969,7 +970,7 @@ function checkMissingImage(caid) {
 
     const fallbackSrc = ""
     let missingImages = []
-    
+
     let delay = 0
     const hasAutoSlider = !!$(`${caid} .rlc-autoslider`).length
 
@@ -1005,20 +1006,20 @@ function checkMissingImage(caid) {
 
           const missingID = `rlc-missing-image--${i}`
           const imgUrl =
-            img.attr("src") !== undefined
-              ? img.attr("src")
-              : img[0].currentSrc
+            img.attr("src") !== undefined ? img.attr("src") : img[0].currentSrc
 
-          missingImages.push({
-            imgUrl: imgUrl,
-            id: missingID,
-          })
+          if (imgUrl) {
+            missingImages.push({
+              imgUrl: imgUrl,
+              id: missingID,
+            })
 
-          img
-            .addClass("rlc-dev-missing-img")
-            .attr("id", missingID)
-            .css("--_height", `${parentEl.height()}px`)
-          // .css("background-image", `url(${fallbackSrc})`);
+            img
+              .addClass("rlc-dev-missing-img")
+              .attr("id", missingID)
+              .css("--_height", `${parentEl.height()}px`)
+            // .css("background-image", `url(${fallbackSrc})`);
+          }
         }
       })
 
@@ -1026,9 +1027,9 @@ function checkMissingImage(caid) {
 
       if (!missingImages.length) {
         $('.rlc-dev-item[data-index="4"]')
-          .addClass('rlc-disabled')
-          .removeAttr('data-state')
-          .attr('data-status', 'no')
+          .addClass("rlc-disabled")
+          .removeAttr("data-state")
+          .attr("data-status", "no")
         return
       }
 
@@ -1054,12 +1055,13 @@ function checkMissingImage(caid) {
   `)
 
       showMissingImages()
-      
     }, delay)
   }, 1000)
 }
 
 function generateMissingImageItem(missingImages) {
+  const ordinalList = ["st", "nd", "rd"]
+
   return missingImages
     .map((img, _) => {
       const isSlide = !!$(`#${img.id}`).closest(".rlc-slide").length
@@ -1072,6 +1074,8 @@ function generateMissingImageItem(missingImages) {
         slideEl = $(`#${img.id}`).closest(".rlc-slide")[0]
         slideIndex = slideParent.find(".rlc-slide").index(slideEl)
       }
+
+      const ordinal = slideIndex < 4 ? ordinalList[slideIndex] : "th"
 
       return `
     <li class='rlc-dev-missing-image' data-missing='#${img.id}'>
@@ -1088,7 +1092,11 @@ function generateMissingImageItem(missingImages) {
         </span>
 
         <span class='rlc-dev-missing-img-slide-index'>
-          ${slideIndex !== -1 ? " ( " + (slideIndex + 1) + " slide )" : ""}
+          ${
+            slideIndex !== -1
+              ? " ( " + (slideIndex + 1) + ordinal + " slide )"
+              : ""
+          }
         </span>
       <div>
     </li>
