@@ -97,7 +97,7 @@ li.rlc-dev-item {
   background-color: var(--_rlc-dev-navy);
 }
 
-.rlc-ab-container {
+.rlc-info-container {
   width: clamp(240px, var(--_link-width, 100%), var(--_max-width, 500px));
   height: max-content;
   padding: 10px;
@@ -124,45 +124,45 @@ li.rlc-dev-item {
   transform: translate(var(--_translateX, 0px), var(--_translateY, 0px));
 }
 
-.rlc-ab-container:hover {
+.rlc-info-container:hover {
   background-color: black;
   color: white;
   z-index: 99;
 }
 
-*:has(> .rlc-ab-container:hover) {
+*:has(> .rlc-info-container:hover) {
   z-index: 999;
 }
 
-.rlc-pillbutton:has(.rlc-ab-container) {
+.rlc-pillbutton:has(.rlc-info-container) {
   white-space: normal;
 }
 
-.rlc-pillbutton .rlc-ab-container:hover .rlc-textgroup .rlc-ab-font {
+.rlc-pillbutton .rlc-info-container:hover .rlc-textgroup .rlc-ab-font {
   color: white !important;
 }
 
-.rlc-pillbutton .rlc-ab-container {
+.rlc-pillbutton .rlc-info-container {
   white-space: normal;
 }
 
-.rlc-slide .rlc-ab-container {
+.rlc-slide .rlc-info-container {
   max-width: var(--_max-width, calc(100% - 20px));
 }
 
 .rlc-slide
   :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)
-  .rlc-ab-container {
+  .rlc-info-container {
   width: clamp(200px, var(--_link-width, 100%), var(--_max-width, 500px));
   max-width: clamp(200px, var(--_link-width, 100%), var(--_max-width, 500px));
 }
 
-.rlc-ab-container * {
+.rlc-info-container * {
   text-transform: unset;
 }
 
-:where(a, .rlc-pillbutton, .rlc-linecta) .rlc-ab-container .rlc-ab-container,
-.rlc-linecta .rlc-ab-container {
+:where(a, .rlc-pillbutton, .rlc-linecta) .rlc-info-container .rlc-info-container,
+.rlc-linecta .rlc-info-container {
   top: unset;
   left: 0;
   bottom: 100%;
@@ -170,18 +170,18 @@ li.rlc-dev-item {
   white-space: normal;
 }
 
-.rlc-linecta:has(.rlc-arrow-link):has(.rlc-ab-container),
-.rlc-linecta.rlc-cta-arrow:has(.rlc-ab-container) {
+.rlc-linecta:has(.rlc-arrow-link):has(.rlc-info-container),
+.rlc-linecta.rlc-cta-arrow:has(.rlc-info-container) {
   overflow: visible;
 }
 
-.rlc-hotspot .rlc-ab-container {
+.rlc-hotspot .rlc-info-container {
   top: 20px;
   left: 20px;
   transform: unset;
 }
 
-:where([id$="hero"], [class$="hero"]) .rlc-hotspot .rlc-ab-container {
+:where([id$="hero"], [class$="hero"]) .rlc-hotspot .rlc-info-container {
   top: 100px;
 }
 
@@ -190,24 +190,24 @@ li.rlc-dev-item {
   pointer-events: none !important;
 }
 
-.rlc-bg_link .rlc-ab-container {
+.rlc-bg_link .rlc-info-container {
   top: 20px;
   left: 20px;
   transform: unset;
 }
 
-.rlc-cards .rlc-ab-container {
+.rlc-cards .rlc-info-container {
   left: unset;
   right: 20px;
 }
 
-header[class^="rlc-catslider"] .rlc-ab-container {
+header[class^="rlc-catslider"] .rlc-info-container {
   top: 0;
   left: 0;
   bottom: unset;
 }
 
-.rlc-target .rlc-ab-container {
+.rlc-target .rlc-info-container {
   --_max-width: 200px;
   --_link-width: 200px;
 }
@@ -219,7 +219,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     .rlc-textgroup-in,
     .rlc-intro
   )
-  > .rlc-ab-container {
+  > .rlc-info-container {
   --_translateX: -50%;
   --_translateY: -12px;
 }
@@ -232,7 +232,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     .rlc-textgroup-in,
     .rlc-intro
   )
-  > .rlc-ab-container {
+  > .rlc-info-container {
   transform: none;
 }
 
@@ -243,7 +243,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     .rlc-textgroup-in,
     .rlc-intro
   ):where([class*="text-left"])
-  > .rlc-ab-container {
+  > .rlc-info-container {
   --_translateY: -12px;
   left: 0;
 }
@@ -260,7 +260,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     [class*="top-center"],
     [class*="pos-center"]
   )
-  > .rlc-ab-container {
+  > .rlc-info-container {
   --_translateX: -50%;
   left: 50%;
 }
@@ -273,7 +273,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     .rlc-intro,
     .rlc-catslider-hd
   ):where([class*="bottom-left"], [class*="top-left"])
-  > .rlc-ab-container {
+  > .rlc-info-container {
   --_translateX: 0;
   left: 0;
 }
@@ -286,12 +286,12 @@ header[class^="rlc-catslider"] .rlc-ab-container {
     .rlc-intro,
     .rlc-catslider-hd
   ):where([class*="bottom-right"], [class*="top-right"])
-  > .rlc-ab-container {
+  > .rlc-info-container {
   --_translateX: 0;
   right: 0;
 }
 
-.rlc-header .rlc-ab-container {
+.rlc-header .rlc-info-container {
   --_translateX: -50%;
   --_translateY: -12px;
 }
@@ -323,7 +323,7 @@ header[class^="rlc-catslider"] .rlc-ab-container {
   font-weight: bold;
 }
 
-.rlc-ab-container:has(.rlc-dev-err) {
+.rlc-info-container:has(.rlc-dev-err) {
   outline: 2px solid var(--_rlc-dev-red);
   outline-offset: 2px;
 }
@@ -469,6 +469,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   outline-offset: 10px;
 
   background-color: rgba(0, 0, 0, 0.3);
+  background-size: clamp(100px, 40%, 250px);
   background-repeat: no-repeat;
   background-position: center;
 
@@ -575,4 +576,28 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 
 .rlc-dev-missing-img-slide-index:empty{
   display: none !important;
+}
+
+.rlc-dev-image-name-container{
+  --_offset: 20px;
+  position: absolute;
+  top: var(--_offset);
+  left: var(--_offset);
+
+  padding: 6px 12px;
+  background-color: var(--_rlc-dev-black-bg);
+  font-size: 16px !important;
+  color: white !important;
+  border-radius: 5px;
+
+  transition: background-color .3s;
+}
+
+.rlc-dev-image-name-container:hover{
+  background-color: black;
+}
+
+/* only transparent header need to lower the hero banner image info container */
+body:has(header.transparent) #main .open-html-content:has(.rlc-creative_v3) article:first-of-type .rlc-dev-image-name-container{
+  top: calc(60px + var(--_offset));
 }

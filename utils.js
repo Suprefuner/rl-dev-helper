@@ -1,6 +1,6 @@
 function cleanUp() {
   $(".rlc-dev-helper").remove();
-  $(".rlc-ab-container").remove();
+  $(".rlc-info-container").remove();
   $(".rlc-dev-color-container").remove();
   $(".rlc-dev-video-container").remove();
   $(".rlc-dev-missing-image-container").remove();
@@ -108,4 +108,31 @@ async function copy(content, target, callback = () => {}) {
   } catch (error) {
     console.log("something went wrong to copy");
   }
+}
+
+function getImageName(imgUrl){
+  return imgUrl
+    ? imgUrl.split('/').at(-1)
+    : ""
+}
+
+// MARK: svg path 
+function getIconPath(icon){
+  if(icon === 'copy'){
+    return `<path class='rlc-icon--default' d="M288 64C252.7 64 224 92.7 224 128L224 384C224 419.3 252.7 448 288 448L480 448C515.3 448 544 419.3 544 384L544 183.4C544 166 536.9 149.3 524.3 137.2L466.6 81.8C454.7 70.4 438.8 64 422.3 64L288 64zM160 192C124.7 192 96 220.7 96 256L96 512C96 547.3 124.7 576 160 576L352 576C387.3 576 416 547.3 416 512L416 496L352 496L352 512L160 512L160 256L176 256L176 192L160 192z"/>`
+  }
+
+
+  if(icon === 'success'){
+    return `<path class='rlc-icon--success' d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>`
+  }
+
+  if(icon === 'close') {
+    return `<path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/>`
+  }
+}
+
+
+function getMissingImageFallback(){
+  return "data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23ffffff%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%3Cpath%20d%3D%22M7.828%205l-1-1H22v15.172l-1-1v-.69l-3.116-3.117-.395.296-.714-.714.854-.64a.503.503%200%200%201%20.657.046L21%2016.067V5zM3%2020v-.519l2.947-2.947a1.506%201.506%200%200%200%20.677.163%201.403%201.403%200%200%200%20.997-.415l2.916-2.916-.706-.707-2.916%202.916a.474.474%200%200%201-.678-.048.503.503%200%200%200-.704.007L3%2018.067V5.828l-1-1V21h16.172l-1-1zM17%208.5A1.5%201.5%200%201%201%2015.5%207%201.5%201.5%200%200%201%2017%208.5zm-1%200a.5.5%200%201%200-.5.5.5.5%200%200%200%20.5-.5zm5.646%2013.854l.707-.707-20-20-.707.707z%22%3E%3C/path%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h24v24H0z%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E"
 }

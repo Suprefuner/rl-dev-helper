@@ -99,29 +99,30 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         () => {
           chrome.scripting.executeScript({
           target: { tabId: tabId },
-          files: ["utils.js"], // Inject utils.js for cleanUp
+          files: ["utils.js"],
           world: "MAIN",
         }, () => {
           chrome.scripting.executeScript({
             target: { tabId: tabId },
             func: () => {
-              if (typeof window.cleanUp === "function") {
-                window.cleanUp();
-              } else {
-                // Fallback cleanup
-                const elements = document.querySelectorAll(
-                  ".rlc-dev-helper, .rlc-ab-container, .rlc-dev-color-container, " +
-                  ".rlc-dev-video-container, .rlc-dev-missing-image-container, .rlc-dev-missing-img"
-                );
-                elements.forEach(el => el.remove());
-                document.querySelectorAll(".rlc-carousel-dev-z-index").forEach(el => {
-                  el.style.zIndex = "";
-                  el.classList.remove("rlc-carousel-dev-z-index");
-                });
-                document.removeEventListener("click.rlcDevHelper");
-                document.removeEventListener("mouseover.rlcDevHelper");
-                document.removeEventListener("mouseout.rlcDevHelper");
-              }
+              window.cleanUp();
+              // if (typeof window.cleanUp === "function") {
+              //   window.cleanUp();
+              // } else {
+              //   // Fallback cleanup
+              //   const elements = document.querySelectorAll(
+              //     ".rlc-dev-helper, .rlc-info-container, .rlc-dev-color-container, " +
+              //     ".rlc-dev-video-container, .rlc-dev-missing-image-container, .rlc-dev-missing-img"
+              //   );
+              //   elements.forEach(el => el.remove());
+              //   document.querySelectorAll(".rlc-carousel-dev-z-index").forEach(el => {
+              //     el.style.zIndex = "";
+              //     el.classList.remove("rlc-carousel-dev-z-index");
+              //   });
+              //   document.removeEventListener("click.rlcDevHelper");
+              //   document.removeEventListener("mouseover.rlcDevHelper");
+              //   document.removeEventListener("mouseout.rlcDevHelper");
+              // }
               window.rlcDevHelperLoaded = false;
             },
             world: "MAIN",
