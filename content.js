@@ -17,16 +17,31 @@ if (!window._rlcDevHelper) {
   };
 
   window.helperList = [
-    { name: "CGID/PID", fn: "toggleID" },
-    { name: "font family", fn: "toggleFont" },
+    { 
+      name: "CGID/PID", 
+      fn: "toggleID", 
+      checkError: ':where(a, .rlc-cta, .rlc-linecta, .rlc-pillbutton):has(.rlc-dev-err)' 
+    },
+    { 
+      name: "font family", 
+      fn: "toggleFont", 
+      checkError: '*:not(a):has(>.rlc-info-container .rlc-dev-err)' 
+    },
     {
       name: "product colors",
       fn: toggleProdColor,
       validation: () => $('[data-action="normalswatchescolor"]').length,
     },
-    { name: "video URL", fn: toggleVidUrl },
-    { name: "missing images", fn: toggleMissingImages, status: "show" },
-    { name: "image info", fn: toggleImageInfo },
+    { 
+      name: "video URL", 
+      fn: toggleVidUrl },
+    { 
+      name: "missing images", 
+      fn: toggleMissingImages, 
+      status: "show" },
+    { 
+      name: "image info", 
+      fn: toggleImageInfo },
   ];
 }
 
@@ -85,25 +100,18 @@ function helperButtonInit() {
 }
 
 function bindEvent() {
+  // main helper button
   $(document).on("click.rlcDevHelper", ".rlc-btn--dev", devBtnHandler);
   $(document).on("click.rlcDevHelper", ".rlc-dev-item", (e) =>
     devItemHandler(e, window.helperList)
   );
 
+  // product color button
   $(document).on("click", ".rlc-dev-color-container", async function () {
     copy($(this).attr("data-color"), $(this));
   });
 
-  $(document).on(
-    "click",
-    '.rlc-dev-video-container .rlc-dev-icon[data-action="copy"]',
-    async function () {
-      const parentEl = $(this).closest(".rlc-dev-video-container");
-      const copyContent = $(parentEl).attr("data-video");
-      copy(copyContent, $(this));
-    }
-  );
-
+  // detect quick-shop popup
   const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "attributes" && mutation.target === document.body) {
@@ -133,69 +141,98 @@ function bindEvent() {
     attributeFilter: ["class"],
   });
 
+  // copy video JSON button
+  $(document).on(
+    "click",
+    '.rlc-dev-video-container .rlc-dev-icon[data-action="copy"]',
+    async function (e) {
+      e.preventDefault();
+      const parentEl = $(this).closest(".rlc-dev-video-container");
+      const copyContent = $(parentEl).attr("data-video");
+      copy(copyContent, $(this));
+    }
+  );
+
+  // missing image button
   $(document).on("click.rlcDevHelper", ".rlc-dev-missing-image", function () {
-    const target = $(this).attr("data-missing");
+    const missingImageItem = $(this);
+    const id = $(this).attr("data-missing");
+    const targetEl = $(`${id}`);
+
     $("html, body").animate(
       {
-        scrollTop: $(`${target}`).offset().top - 200,
+        scrollTop: targetEl.offset().top - 200,
       },
-      500
+      500,
+      function () {
+        const isSwiper = !!targetEl.closest(".swiper-container").length;
+        const isFadeSlider = !!targetEl.closest(".rlc-fadeslider2").length;
+        const isAutoSlider = !!targetEl.closest(".rlc-autoslider").length;
+
+        // different handle for swiper, fade slider and auto slider
+        if (isSwiper) {
+          const swiperEl = targetEl.closest(".swiper-container");
+          const slideIndex = swiperEl
+            .find(".rlc-slide")
+            .index(swiperEl.find(`.rlc-slide:has(${id})`));
+
+          swiperEl[0].swiper.slideTo(slideIndex, 300);
+        }
+
+        if (isFadeSlider) {
+          const slider = targetEl.closest(".rlc-fadeslider2");
+          const slide = targetEl.closest(".rlc-slide")[0];
+          const sliderArrowBtn = slider.find(".rlc-carousel-arrow-right")[0];
+          const sliderPauseBtn = slider.find(".rlc-looppause")[0];
+
+          let isActiveSlide = $(slide).hasClass("rlc-active");
+          const isPaused = slider.hasClass("user_paused");
+
+          if (!isPaused) {
+            sliderPauseBtn.click();
+          }
+
+          let clickInterval = setInterval(() => {
+            isActiveSlide = $(slide).hasClass("rlc-active");
+
+            !isActiveSlide
+              ? sliderArrowBtn.click()
+              : clearInterval(clickInterval);
+          }, 100);
+        }
+
+        if (isAutoSlider) {
+          const slider = targetEl.closest(".rlc-autoslider");
+          const sliderWrapperEl = targetEl.closest(".rlc-in");
+          const slideIndex = sliderWrapperEl
+            .find(".rlc-slide")
+            .index(sliderWrapperEl.find(`.rlc-slide:has(${id})`));
+          const sliderPauseBtn = slider.find(".rlc-looppause")[0];
+
+          if (!slider.hasClass("user_paused")) {
+            sliderPauseBtn.click();
+          }
+
+          window.gsap
+            .getTweensOf(sliderWrapperEl.find(".rlc-slide"))[0]
+            .parent.toIndex(slideIndex, {
+              duration: 0.8,
+              ease: "power1.inOut",
+            });
+        }
+
+        if (targetEl[0].naturalWidth === 0) return;
+
+        removeMissingImageItemStyle(targetEl);
+        missingImageItem.remove();
+
+        if ($(".rlc-dev-missing-image").length) return;
+        updateNoMissingImage();
+      }
     );
-
-    const isSwiper = !!$(`${target}`).closest(".swiper-container").length;
-    const isFadeSlider = !!$(`${target}`).closest(".rlc-fadeslider2").length;
-    const isAutoSlider = !!$(`${target}`).closest(".rlc-autoslider").length;
-
-    if (isSwiper) {
-      const swiperEl = $(`${target}`).closest(".swiper-container");
-      const slideIndex = swiperEl
-        .find(".rlc-slide")
-        .index(swiperEl.find(`.rlc-slide:has(${target})`));
-
-      swiperEl[0].swiper.slideTo(slideIndex, 300);
-    }
-
-    if (isFadeSlider) {
-      const slider = $(`${target}`).closest(".rlc-fadeslider2");
-      const slide = $(`${target}`).closest(".rlc-slide")[0];
-      const sliderArrowBtn = slider.find(".rlc-carousel-arrow-right")[0];
-      const sliderPauseBtn = slider.find(".rlc-looppause")[0];
-
-      let isActiveSlide = $(slide).hasClass("rlc-active");
-      const isPaused = slider.hasClass("user_paused");
-
-      if (!isPaused) {
-        sliderPauseBtn.click();
-      }
-
-      let clickInterval = setInterval(() => {
-        isActiveSlide = $(slide).hasClass("rlc-active");
-
-        !isActiveSlide ? sliderArrowBtn.click() : clearInterval(clickInterval);
-      }, 100);
-    }
-
-    if (isAutoSlider) {
-      const slider = $(`${target}`).closest(".rlc-autoslider");
-      const sliderWrapperEl = $(`${target}`).closest(".rlc-in");
-      const slideIndex = sliderWrapperEl
-        .find(".rlc-slide")
-        .index(sliderWrapperEl.find(`.rlc-slide:has(${target})`));
-      const sliderPauseBtn = slider.find(".rlc-looppause")[0];
-
-      if (!slider.hasClass("user_paused")) {
-        sliderPauseBtn.click();
-      }
-
-      window.gsap
-        .getTweensOf(sliderWrapperEl.find(".rlc-slide"))[0]
-        .parent.toIndex(slideIndex, {
-          duration: 0.8,
-          ease: "power1.inOut",
-        });
-    }
   });
 
+  // missing image container close button
   $(document).on(
     "click.rlcDevHelper",
     '.rlc-dev-icon[data-action="close"]',
@@ -204,6 +241,7 @@ function bindEvent() {
     }
   );
 
+  // missing image container copy all button
   $(document).on(
     "click.rlcDevHelper",
     ".rlc-dev-missing-image-header .rlc-dev-copy-all",
@@ -257,6 +295,11 @@ function generateDevItems(list) {
   let html = "";
   list.forEach((item, i) => {
     const status = item?.status === "show";
+    const hasError = item?.checkError 
+      ? checkHasError(item.checkError) 
+      : null
+
+    console.log({hasError})
 
     html += `
       <li 
@@ -266,6 +309,7 @@ function generateDevItems(list) {
         data-state="${status ? "on" : "off"}"
       >
           ${" " + item.name}
+          ${hasError !== null && hasError ? "🔴" : ""}
       </li>
     `;
   });
@@ -393,7 +437,7 @@ function generateBGLinkInfoContainer() {
 }
 
 function generateCTAInfoContainer() {
-  $(".rlc-links, .rlc-copygroup, .rlc-textgroup").each((i, linksContainer) => {
+  $(".rlc-links, .rlc-copygroup, .rlc-textgroup, .rlc-back-arrow-group").each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
     const isTooManyLinks = checkTooManyLinks(linksContainer);
@@ -614,10 +658,15 @@ function getLinkID(el) {
     cgid = urlPart;
   }
 
-  if (cgid?.includes("search")) {
-    cgid = `<span class='rlc-dev-err'>${
-      urlPart.split("search?")[1].split("&")[0]
-    }</span>`;
+  if (urlPart?.includes("search")) {
+    if (urlPart.split("search?")[1]) {
+      cgid = `
+        <span class='rlc-dev-err'>
+          invalid CGID: <br>
+          ${urlPart.split("search?")[1].split("&")[0]}
+        </span>
+      `;
+    }
   }
 
   if (cgid?.includes("ab=")) {
@@ -677,6 +726,7 @@ function hideID() {
   $(
     ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container"
   ).hide();
+  $(".rlc-cta .rlc-info-container").hide()
   removeZIndexFromCarousel();
   hideOverflow();
   isShowingAB = false;
@@ -697,6 +747,8 @@ function showID() {
     showOverflow(container);
     $(el).show();
   });
+
+  $(".rlc-cta .rlc-info-container").show()
   isShowingAB = true;
 }
 
@@ -772,8 +824,8 @@ function generateCopyGroupInfoContainer(caid) {
           additionalCSS += `--_translateY: 0; bottom: 0; top: unset;`;
         }
 
-        if($(container).closest('.rlc-carousel').length){
-          $(container).closest('.rlc-carousel').css('overflow', 'visible')
+        if ($(container).closest(".rlc-carousel").length) {
+          $(container).closest(".rlc-carousel").css("overflow", "visible");
         }
 
         // center ab-container if copy group almost the same width of container
@@ -882,6 +934,10 @@ function hideFont() {
     `*:has(>.rlc-dek:not(:where(${groupClasses}) .rlc-dek)) > .rlc-info-container`
   ).hide();
   $(".rlc-header > .rlc-info-container").hide();
+
+  // remove overflow visible CSS override from showFont()
+  $('.rlc-block:has(.rlc-info-container)').removeAttr('style')
+  
   isShowingFont = false;
 }
 
@@ -897,6 +953,13 @@ function showFont() {
     `*:has(>.rlc-dek:not(:where(${groupClasses}) .rlc-dek)) > .rlc-info-container`
   ).show();
   $(".rlc-header > .rlc-info-container").show();
+  
+  // only update the overflow if the target isn't in slider
+  $('.rlc-block:not(:has(.rlc-slide)):has(.rlc-info-container)').each((i, el)=>{
+    if($(el).css('overflow') === 'hidden'){
+      $(el).css('overflow', 'visible')
+    }
+  })
   isShowingFont = true;
 }
 
@@ -932,7 +995,9 @@ function showVidUrl() {
     const videoUrlJSON = JSON.parse(videoUrl);
 
     let html = `
-      <div class="rlc-dev-video-container" data-video="${JSON.stringify(videoUrlJSON).replaceAll('"', '\'')}">
+      <div class="rlc-dev-video-container" data-video="${JSON.stringify(
+        videoUrlJSON
+      ).replaceAll('"', "'")}">
         <div class='rlc-dev-video-item'>
           <span>
             mobile: 
@@ -950,12 +1015,12 @@ function showVidUrl() {
           </a>
         </div>
 
-        <div class='rlc-dev-icon' data-action='copy' data-state='idle'>
+        <a href="#" class='rlc-dev-icon' data-action='copy' data-state='idle'>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-            ${getIconPath('copy')}
-            ${getIconPath('success')}
+            ${getIconPath("copy")}
+            ${getIconPath("success")}
           </svg>
-        </div>
+        </a>
       </a>
     `;
     $(item).append(html);
@@ -974,7 +1039,6 @@ function checkMissingImage(caid) {
   }
 
   setTimeout(() => {
-    const fallbackSrc = getMissingImageFallback();
     let missingImages = [];
 
     const hasAutoSlider = !!$(`${caid} .rlc-autoslider`).length;
@@ -989,11 +1053,11 @@ function checkMissingImage(caid) {
           sliderPauseBtn.click();
         }
 
-        // window.scrollTo(0, sliderWrapperEl.offset().top);
         const tweenParent = window.gsap.getTweensOf(
           sliderWrapperEl.find(".rlc-slide")
         )[0].parent;
 
+        // scroll to the fist item first and then the last item
         tweenParent.toIndex(0, {
           duration: 0.5,
           ease: "power1.inOut",
@@ -1030,8 +1094,7 @@ function checkMissingImage(caid) {
           img
             .addClass("rlc-dev-missing-img")
             .attr("id", missingID)
-            .css("--_height", `${parentEl.height()}px`)
-            .css("background-image", `url(${fallbackSrc})`);
+            .css("--_height", `${parentEl.height()}px`);
         }
       }
     });
@@ -1043,11 +1106,11 @@ function checkMissingImage(caid) {
       return;
     } else {
       setTimeout(() => {
-        // double check
+        // if there are missing images -> double check
         missingImages.forEach((img, i) => {
           const imgEl = $(`#${img.id}`);
           if (imgEl[0]?.naturalWidth !== 0) {
-            imgEl.removeClass("rlc-dev-missing-img").removeAttr("id");
+            removeMissingImageItemStyle(imgEl);
 
             missingImages[i].id = "";
             missingImages[i].imgUrl = "";
@@ -1061,7 +1124,7 @@ function checkMissingImage(caid) {
           return;
         }
 
-        generateMissingImageContainer(missingImages)
+        generateMissingImageContainer(missingImages);
         showMissingImages();
       }, 500);
     }
@@ -1077,8 +1140,9 @@ function generateMissingImageContainer(missingImages) {
         <h4 class='rlc-dev-missing-image-title'>
           Missing images found: 
         </h4>
-        <div class='rlc-dev-copy-all'>
-          Copy All
+        
+        <div class='rlc-dev-check-again'>
+          Check again
         </div>
       </header>
       <ul class="rlc-dev-missing-images">
@@ -1086,7 +1150,7 @@ function generateMissingImageContainer(missingImages) {
       </ul>
       <div class="rlc-dev-icon" data-action="close">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-            ${getIconPath('close')}
+            ${getIconPath("close")}
           </svg>
         </div>
     </div>
@@ -1112,52 +1176,59 @@ function generateMissingImageItem(missingImages) {
       const ordinal = slideIndex < 4 ? ordinalList[slideIndex] : "th";
 
       return `
-    <li class='rlc-dev-missing-image' data-missing='#${img.id}'>
-      <div class='rlc-dev-icon' data-action='copy' data-state='idle'>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-          ${getIconPath('copy')}
-          ${getIconPath('success')}
-        </svg>
-      </div>
-      <div>
-        <span class='rlc-dev-missing-img-url'>
-          ${img.imgUrl}
-        </span>
+        <li class='rlc-dev-missing-image' data-missing='#${img.id}'>
+          <div class='rlc-dev-icon' data-action='copy' data-state='idle'>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+              ${getIconPath("copy")}
+              ${getIconPath("success")}
+            </svg>
+          </div>
+          <div>
+            <span class='rlc-dev-missing-img-url'>
+              ${img.imgUrl}
+            </span>
 
-        <span class='rlc-dev-missing-img-slide-index'>
-          ${
-            slideIndex !== -1
-              ? " ( " + (slideIndex + 1) + ordinal + " slide )"
-              : ""
-          }
-        </span>
-      <div>
-    </li>
-  `;
+            <span class='rlc-dev-missing-img-slide-index'>
+              ${
+                slideIndex !== -1
+                  ? " ( " + (slideIndex + 1) + ordinal + " slide )"
+                  : ""
+              }
+            </span>
+          <div>
+        </li>
+      `;
     })
     .join("");
 }
 
+function removeMissingImageItemStyle(el) {
+  $(el)
+    .removeClass("rlc-dev-missing-img")
+    .removeAttr("id")
+    .css("--_height", "auto");
+}
+
 function updateNoMissingImage() {
-  $('.rlc-dev-item[data-index="4"]')
+  const missingImageDevHelperItem = $('.rlc-dev-item[data-index="4"]');
+  missingImageDevHelperItem
     .addClass("rlc-disabled")
     .removeAttr("data-state")
-    .attr("data-status", "no")
-    .append(" ✅");
+    .attr("data-status", "no");
+
+  if (!missingImageDevHelperItem.text().includes("✅")) {
+    missingImageDevHelperItem.append(" ✅");
+  }
+
+  $(".rlc-dev-missing-image-container").remove();
 }
 
 function showMissingImages() {
   $(".rlc-dev-missing-image-container").show();
-  $(
-    ".rlc-imagery:has(.rlc-dev-missing-img) .rlc-dev-image-name-container"
-  ).show();
 }
 
 function hideMissingImages() {
   $(".rlc-dev-missing-image-container").hide();
-  $(
-    ".rlc-imagery:has(.rlc-dev-missing-img .rlc-dev-image-name-container"
-  ).hide();
 }
 
 // MARK: Image

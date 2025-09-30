@@ -60,7 +60,8 @@ function getFontDetails(el) {
 
   return `
    ◻️ family: ${fontFamily} <br>
-   ◻️ size: ${window.getComputedStyle(el).getPropertyValue("font-size")}
+   ◻️ size: ${window.getComputedStyle(el).getPropertyValue("font-size")} <br>
+   ◻️ weight: ${window.getComputedStyle(el).getPropertyValue("font-weight")}
   `;
 }
 
@@ -132,7 +133,6 @@ function getIconPath(icon){
   }
 }
 
-
-function getMissingImageFallback(){
-  return "data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23ffffff%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%3Cpath%20d%3D%22M7.828%205l-1-1H22v15.172l-1-1v-.69l-3.116-3.117-.395.296-.714-.714.854-.64a.503.503%200%200%201%20.657.046L21%2016.067V5zM3%2020v-.519l2.947-2.947a1.506%201.506%200%200%200%20.677.163%201.403%201.403%200%200%200%20.997-.415l2.916-2.916-.706-.707-2.916%202.916a.474.474%200%200%201-.678-.048.503.503%200%200%200-.704.007L3%2018.067V5.828l-1-1V21h16.172l-1-1zM17%208.5A1.5%201.5%200%201%201%2015.5%207%201.5%201.5%200%200%201%2017%208.5zm-1%200a.5.5%200%201%200-.5.5.5.5%200%200%200%20.5-.5zm5.646%2013.854l.707-.707-20-20-.707.707z%22%3E%3C/path%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h24v24H0z%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E"
+function checkHasError(target){
+  return !!$(target).length
 }

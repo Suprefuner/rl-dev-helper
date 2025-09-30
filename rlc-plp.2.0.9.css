@@ -1,0 +1,776 @@
+/* rlc-plp.2.0.5 */
+
+/* page styles */
+.rlc-creative_v3 .rlc-p {
+  margin: 0;
+}
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-copygroup {
+  pointer-events: none;
+}
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-links .rlc-linecta {
+  font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+}
+.rlc-creative_v3 .rlc-imagery.rlc-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+/* start mobile target width & height */
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-brand_polo .is-quick-shoppable.rlc-target,
+  .rlc-creative_v3 .rlc-brand_luxe .is-quick-shoppable.rlc-target {
+    width: 1.5em;
+    height: 1.5em;
+  }
+}
+/* end mobile target width & height */
+
+/* start font-styles */
+@media screen and (min-width: 768px) {
+  /* leJeune */
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 0.75em;
+    line-height: 1.83em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-x875 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 0.875em;
+    line-height: 1.71em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-1 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 1em;
+    line-height: 1.75em;
+    letter-spacing: 0.0156em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-1x25 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-dsk-lejeune-1x25 {
+    margin-bottom: 0.8em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-1x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 1.75em;
+    line-height: 1.42em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-dsk-lejeune-1x75 {
+    margin-bottom: 0.5714em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-2x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 2.75em;
+    line-height: 1.18em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-dsk-lejeune-2x75 {
+    margin-bottom: 0.3636em;
+  }
+
+  /* Founders */
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category.rlc-product-name {
+    line-height: 1.27em;
+    margin: 1.8182em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-founders-x688 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 0.6875em;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-eyebrow.rlc-dsk-founders-x688 {
+    letter-spacing: 0.0555em;
+    margin-bottom: 1.8182em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-founders-x75 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 0.75em;
+    line-height: 1.83em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-founders-1x125 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 1.125em;
+    line-height: 1.55em;
+    letter-spacing: normal;
+  }
+  /* rl_droidkufi */
+  [lang^='ar'] .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category.rlc-product-name {
+    font-family: RL_DroidKufi, 'Founders Grotesk Text Regular', Helvetica, Arial, sans-serif;
+  }
+
+  /* Sackers */
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x438 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    font-size: 0.4375em;
+    line-height: 2.85em;
+    letter-spacing: 0.0714em;
+    text-transform: uppercase;
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-x438 {
+    margin-bottom: 2.2857;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x531 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    font-size: 0.53125em;
+    line-height: 2.9em;
+    letter-spacing: 0.1106em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-x531 {
+    margin-bottom: 1.8824em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x531.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x625 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    color: currentColor;
+    font-size: 0.625em;
+    line-height: 2.8em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-x625 {
+    margin-bottom: 1.6em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x625.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x875 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 0.875em;
+    line-height: 1.85em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-x875 {
+    margin-bottom: 1.1429em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-x875.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-1x125 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 1.125em;
+    line-height: 2.44em;
+    letter-spacing: 0.417em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-1x125 {
+    margin-bottom: 0.8889em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-1x125.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-dsk-sackers-1x5 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+    line-height: 1.83em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-sackers-1x5 {
+    margin-bottom: 0.6667em;
+  }
+
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-all-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-dsk-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-all-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-dsk-margin-bottom-0 {
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  /* leJeune */
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-dsk-lejeune-x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 0.75em;
+    line-height: 1.83em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-lejeune-x875 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 0.875em;
+    line-height: 1.71em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-lejeune-1 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 1em;
+    line-height: 1.75em;
+    letter-spacing: 0.0156em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-mob-lejeune-1 {
+    margin-bottom: 0.75em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-lejeune-1x25 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-mob-lejeune-1x25 {
+    margin-bottom: 0.6em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-lejeune-1x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 1.75em;
+    line-height: 1.42em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-mob-lejeune-1x75 {
+    margin-bottom: 0.4286em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-lejeune-2x75 {
+    font-family: LeJeuneDeck-Regular, 'Times New Roman', Times, serif;
+    font-size: 2.75em;
+    line-height: 1.18em;
+    letter-spacing: normal;
+  }
+
+  /* founders */
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 0.75em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category.rlc-product-name {
+    font-size: 0.688em;
+    line-height: 1.27em;
+    margin: 1.8182em;
+  }
+  .rlc-creative_v3 .rlc-usebrandstyles .rlc-copygroup .rlc-mob-founders-x688 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 0.6875em;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-eyebrow.rlc-dsk-founders-x688 {
+    letter-spacing: 0.0545em;
+    margin-bottom: 1.4545em;
+  }
+  .rlc-creative_v3 .rlc-usebrandstyles .rlc-copygroup .rlc-mob-founders-x75 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 0.75em;
+    line-height: 1.83em;
+    letter-spacing: normal;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-mob-founders-1x125 {
+    font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+    font-size: 1.125em;
+    line-height: 1.55em;
+    letter-spacing: normal;
+  }
+  /* rl_droidkufi */
+  [lang^='ar'] .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-category.rlc-product-name {
+    font-family: RL_DroidKufi, 'Founders Grotesk Text Regular', Helvetica, Arial, sans-serif;
+  }
+
+  /* sackers */
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x438 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    font-size: 0.4375em;
+    line-height: 2.85em;
+    letter-spacing: 0.0714em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-x438 {
+    margin-bottom: 1.7143;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x438.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x531 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    font-size: 0.53125em;
+    line-height: 2.9em;
+    letter-spacing: 0.1106em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-x531 {
+    margin-bottom: 1.4118;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x531.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x625 {
+    font-family: 'SackersGothicW01-Medium', Arial, Helvetica, sans-serif;
+    color: currentColor;
+    font-size: 0.625em;
+    line-height: 2.8em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-x625 {
+    margin-bottom: 1.2em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x625.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x875 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 0.875em;
+    line-height: 1.85em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-x875 {
+    margin-bottom: 0.8571em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-x875.rlc-heavy {
+    font-weight: 850;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-1x125 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 1.125em;
+    line-height: 2.44em;
+    letter-spacing: 0.417em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-1x125 {
+    margin-bottom: 0.6667em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-mob-sackers-1x5 {
+    font-family: 'SackersGothicW01-Medium', Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+    line-height: 1.83em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-sackers-1x5 {
+    margin-bottom: 0.6em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-all-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup .rlc-title.rlc-mob-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-all-margin-bottom-0,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup .rlc-title.rlc-mob-margin-bottom-0 {
+    margin-bottom: 0;
+  }
+}
+/* end font-styles */
+
+/* start hero inset */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-brand_polo.rlc-transparent-nav .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-transparent-nav .rlc-copygroup {
+    padding: 9.44em 5.38em 5em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo.rlc-transparent-nav.rlc-mb--small .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-transparent-nav.rlc-mb--small .rlc-copygroup {
+    padding: 6.94em 5.38em 5em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo.rlc-opaque-nav .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-opaque-nav .rlc-copygroup {
+    padding: 5em 5.38em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-brand_polo.rlc-transparent-nav .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-transparent-nav .rlc-copygroup {
+    padding: 6.75em 1.88em 3.75em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo.rlc-transparent-nav.rlc-mb--small .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-transparent-nav.rlc-mb--small .rlc-copygroup {
+    padding: 5.25em 1.88em 3.75em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo.rlc-opaque-nav .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-opaque-nav .rlc-copygroup {
+    padding: 6.75em 1.88em 3.75em;
+  }
+  /* fix for polo_by logo being too wide for mobile 100% and padding from component figma */
+  .rlc-creative_v3 .rlc-brand_polo-by.rlc-opaque-nav .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_polo-by.rlc-transparent-nav .rlc-copygroup {
+    padding: 3.75em 1.08em;
+  }
+}
+/* end hero inset */
+
+/* start ingrid copygroup */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-brand_polo.rlc-ingrid_1x2 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-ingrid_1x2 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_polo.rlc-ingrid_1x3 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-ingrid_1x3 .rlc-copygroup {
+    padding: 5em 5.38em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-50-50 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-50-50 .rlc-copygroup {
+    padding: 3.5em 3.5em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-brand_polo.rlc-ingrid_1x2 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-ingrid_1x2 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_polo.rlc-ingrid_1x3 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe.rlc-ingrid_1x3 .rlc-copygroup {
+    padding: 3.75em 1.88em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-50-50 .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-50-50 .rlc-copygroup {
+    padding: 2.5em 3.5em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-50-50 .rlc-copygroup.rlc-mob--small,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-50-50 .rlc-copygroup.rlc-mob--small {
+    padding: 1.88em 3.5em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-50-50 .rlc-copygroup.rlc-mob--below,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-50-50 .rlc-copygroup.rlc-mob--below {
+    padding: 1.88em;
+  }
+}
+/* end ingrid copygroup */
+
+/* start ingrid carousel-1x2 */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-slide {
+    margin-bottom: 2em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-carousel-arrow {
+    top: 16.5em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-carousel-pagination {
+    width: 46.875em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-slide {
+    margin-bottom: 2em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-carousel-pagination {
+    width: 19.7em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .rlc-carousel-arrow {
+    display: block;
+    top: 15.44em;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .swiper-button-next {
+    right: 1.88em;
+  }
+  [lang^='ar'] .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .swiper-button-next {
+    right: auto;
+    left: 1.88em;
+  }
+  .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .swiper-button-prev {
+    left: 1.88em;
+  }
+  [lang^='ar'] .rlc-creative_v3 .rlc-ingrid_1x2 .rlc-carousel .swiper-button-prev {
+    left: auto;
+    right: 1.88em;
+  }
+}
+/* end ingrid carousel-1x2 */
+
+/* start ingrid carousel-inset */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-foreground.rlc-carousel-inset {
+    padding: 5em 0em;
+  }
+  .rlc-creative_v3 .rlc-foreground.rlc-carousel-inset .rlc-intro.rlc-copygroup {
+    margin-bottom: 3.12em;
+    padding: 0;
+    width: 100%;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-copygroup.rlc-left-half {
+    width: auto;
+    padding: 5em 45.88em 5em 4.38em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-slide {
+    box-sizing: border-box;
+    padding: 0 3.75em;
+    margin-bottom: 3em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-carousel-arrow {
+    top: 21.81em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .swiper-button-next {
+    right: 5.37em;
+  }
+  [lang^='ar'] .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .swiper-button-next {
+    right: auto;
+    left: 5.37em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .swiper-button-prev {
+    left: 5.37em;
+  }
+  [lang^='ar'] .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .swiper-button-prev {
+    left: auto;
+    right: 5.37em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-carousel-pagination {
+    width: 46.875em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-foreground.rlc-carousel-inset {
+    padding: 2.5em 0em;
+  }
+  .rlc-creative_v3 .rlc-foreground.rlc-carousel-inset .rlc-intro.rlc-copygroup {
+    margin-bottom: 1.25em;
+    padding: 0 1.88em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-copygroup {
+    padding: 1.25em 1.88em 0;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-slide {
+    box-sizing: border-box;
+    padding: 0 1.88em 3em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-slide .rlc-links {
+    margin-top: 0;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-slide .rlc-linecta {
+    margin-top: 1.0909em;
+  }
+  .rlc-creative_v3 .rlc-carousel-inset .rlc-carousel .rlc-carousel-pagination {
+    width: 19.6875em;
+  }
+}
+/* end ingrid carousel-inset */
+
+/* start copygroup widths */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup {
+    width: 40.9em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-50-50__block .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-50-50__block .rlc-copygroup {
+    width: 100%;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-autoslider .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-autoslider .rlc-copygroup {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-brand_polo .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-copygroup {
+    box-sizing: border-box;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-autoslider .rlc-copygroup,
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-autoslider .rlc-copygroup {
+    width: 100%;
+  }
+}
+/* end copygroup widths */
+
+/* start logos */
+@media screen and (min-width: 768px) {
+  .rlc-creative_v3 .rlc-logo {
+    margin: 0 auto 1.25em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo .rlc-logo {
+    width: 26.25em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-logo {
+    width: 26.25em;
+  }
+  .rlc-creative_v3 .rlc-brand_polo-by .rlc-logo {
+    width: 31.5em;
+    margin: 0 auto 1.25em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-logo {
+    width: auto;
+    margin: 0 auto 1em;
+  }
+  .rlc-creative_v3 .rlc-brand_luxe .rlc-logo {
+    width: 17.8125em;
+  }
+}
+/* end logos */
+
+/* start looppause styles */
+.rlc-creative_v3 .rlc-hasbuttons .rlc-looppause,
+.rlc-creative_v3 .rlc-videocontainer .rlc-looppause {
+  border: none;
+}
+.rlc-creative_v3 .rlc-hasbuttons .rlc-looppause::before,
+.rlc-creative_v3 .rlc-videocontainer .rlc-looppause::before,
+.rlc-creative_v3 .rlc-hasbuttons .rlc-looppause::after,
+.rlc-creative_v3 .rlc-videocontainer .rlc-looppause::after {
+  width: 4px;
+  height: 17px;
+}
+.rlc-creative_v3 .rlc-hasbuttons.user_paused .rlc-looppause::before,
+.rlc-creative_v3 .rlc-hasbuttons.user_paused .rlc-looppause:hover::before,
+.rlc-creative_v3 .rlc-videocontainer.user_paused .rlc-looppause::before,
+.rlc-creative_v3 .rlc-videocontainer.user_paused .rlc-looppause:hover::before {
+  border-width: 8px 0 8px 13px;
+}
+.rlc-creative_v3 .rlc-hasbuttons .rlc-looppause::after,
+.rlc-creative_v3 .rlc-videocontainer .rlc-looppause::after {
+  left: 18px;
+}
+.rlc-creative_v3 .rlc-videocontainer .rlc-looppause {
+  left: auto !important;
+  right: 3.5em !important;
+  bottom: 1.88em;
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-videocontainer .rlc-looppause {
+    left: auto !important;
+    right: 1.88em !important;
+    bottom: 1.25em;
+  }
+}
+/* end looppause styles */
+
+/* start back arrow styles */
+.rlc-creative_v3 .rlc-back-arrow-group {
+  left: 3.5em;
+  bottom: 2.94em;
+}
+.rlc-creative_v3 .rlc-cta.rlc-arrow {
+  font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+  font-size: 0.688em;
+  line-height: 0.909em;
+  letter-spacing: 0.091em;
+  color: currentColor;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+}
+[lang^='ar'] .rlc-creative_v3 .rlc-cta.rlc-arrow {
+  font-family: RL_DroidKufi, 'Founders Grotesk Text Regular', Helvetica, Arial, sans-serif;
+}
+[lang^='ar'] .rlc-creative_v3 .rlc-back-arrow-group {
+  line-height: 0.909em;
+}
+.rlc-creative_v3 .rlc-cta.rlc-arrow:after,
+.rlc-creative_v3 .rlc-cta.rlc-arrow:before {
+  content: '';
+  display: block;
+  position: absolute;
+}
+.rlc-creative_v3 .rlc-cta.rlc-arrow:before {
+  top: 50%;
+  left: 0.2em;
+  width: 1em;
+  height: 1em;
+  transform-origin: 50% 50%;
+  transform: translateY(-50%) rotate(-135deg);
+  box-shadow: inset -1px 1px 0 0 currentColor;
+}
+.rlc-creative_v3 .rlc-cta.rlc-arrow:after {
+  top: 50%;
+  left: 0em;
+  width: 2em;
+  height: 1px;
+  transform: translateY(-50%);
+  background-color: currentColor;
+}
+.rlc-creative_v3 .rlc-cta.rlc-arrow {
+  padding: 0 0 0 3em;
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-back-arrow-group {
+    left: 1.88em;
+    bottom: 1.81em;
+  }
+  .rlc-creative_v3 .rlc-cta.rlc-arrow {
+    padding: 0 0 0 2.8em;
+  }
+}
+/* end arrow styles */
+
+/* start scroll-to styles */
+.rlc-creative_v3 .rlc-freescroll-slider .rlc-copygroup .rlc-scrollto {
+  font-family: 'Founders Grotesk text Regular', Arial, Helvetica, sans-serif;
+  font-size: 0.688em;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  margin-right: 4em;
+}
+[lang^='ar'] .rlc-creative_v3 .rlc-freescroll-slider .rlc-copygroup .rlc-scrollto {
+  font-family: RL_DroidKufi, 'Founders Grotesk Text Regular', Helvetica, Arial, sans-serif;
+  margin-right: auto;
+  margin-left: 4em;
+  transform: scaleX(-1);
+}
+[lang^='ar'] .rlc-creative_v3 .rlc-freescroll-slider .rlc-copygroup .rlc-scrollto span {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+.rlc-creative_v3 .rlc-freescroll-slider .rlc-copygroup .rlc-scrollto::before {
+  content: '';
+  height: 1px;
+  width: 3.25em;
+  background-color: currentColor;
+  display: block;
+  position: absolute;
+  right: -4.182em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.rlc-creative_v3 .rlc-freescroll-slider .rlc-copygroup .rlc-scrollto::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -4.182em;
+  transform: translateY(-50%) rotate(45deg);
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  width: 0.636em;
+  height: 0.636em;
+}
+/* end scroll-to styles */
+
+/* start pillbutton styles */
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton {
+  border: 1px solid currentColor;
+  border-radius: 1.25em;
+  padding: 0.5625em 1.25em;
+  white-space: nowrap;
+  margin: 0 1em;
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  transition: background-color 500ms linear;
+}
+
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton span {
+  font-family: 'Founders Grotesk text Medium', Arial, Helvetica, sans-serif;
+  font-size: 0.6875em;
+  letter-spacing: 0.0909em;
+  color: currentColor;
+  line-height: 1.27em;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.25s;
+}
+[lang^='ar'] .rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton span {
+  font-family: RL_DroidKufi, 'Founders Grotesk Text Medium', Helvetica, Arial, sans-serif;
+}
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:hover,
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:active,
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:focus {
+  background-color: currentColor;
+}
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:hover span,
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:active span,
+.rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton:focus span {
+  filter: invert(1);
+}
+@media screen and (max-width: 767px) {
+  .rlc-creative_v3 .rlc-usebrandstyles .rlc-pillbutton {
+    margin: 0 0.75em;
+  }
+}
+/* end pillbutton styles */
