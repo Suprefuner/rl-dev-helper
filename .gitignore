@@ -1,6 +1,10 @@
 # Backup
 backup/
 
+#js
+jquery-3.7.1.min.js
+
 # misc
 memo.md
 no-image.png
+.DS_Store

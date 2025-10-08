@@ -53,10 +53,14 @@ if (!$(".rlc-dev-helper").length) {
 }
 
 function helperInit() {
+  
+
   // generate CTA info container
   generateHotspotInfoContainer();
   generateBGLinkInfoContainer();
   generateCTAInfoContainer();
+  generateNavLinkInfoContainer();
+  // generateJumpLinkInfoContainer();
   generateQuickShopInfoContainer();
 
   // generate copy info container
@@ -79,9 +83,10 @@ function helperInit() {
 function helperButtonInit() {
   let container = $("body");
 
-  if (window.isPLP) {
-    container = $(".plp");
-  }
+  // comment becoz append to plp will blocked by quick shop popup
+  // if (window.isPLP) {
+  //   container = $(".plp");
+  // }
 
   container.append(`
       <div class="rlc-dev-helper" data-status="off">
@@ -299,8 +304,6 @@ function generateDevItems(list) {
       ? checkHasError(item.checkError) 
       : null
 
-    console.log({hasError})
-
     html += `
       <li 
         class="rlc-dev-item" 
@@ -413,6 +416,50 @@ function generateHotspotInfoContainer() {
 
     $(el).html(createInfoContainer(getLinkID(el), additionalCSS));
   });
+
+  $(".rlc-bg > a").each((i, el)=>{
+    if (
+      checkInfoContainerExist(el) ||
+      shouldIgnoreLink(el) ||
+      !$(el).attr("href")
+    )
+      return;
+
+    addPositionToEl(el);
+
+    let additionalCSS = 'style="';
+    const slideParent = $(el).closest(".rlc-slide");
+
+    additionalCSS += `--_max-width: min(${
+      $(el)
+        .closest(
+          ":where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-product-tile, .rlc-50-50__block, .rlc-block)"
+        )
+        .width() - 60
+    }px, 500px);`;
+
+    if (slideParent.length) {
+      if (getCSSInt(slideParent, "padding-left") > 0) {
+        additionalCSS += `left: ${
+          getCSSInt(slideParent, "padding-left") + 20
+        }px;`;
+      }
+
+      if (slideParent.width() > $(window).width() / 1.2) {
+        additionalCSS += `--_link-width: 500px;`;
+      } else if (slideParent.width() > $(window).width() / 3) {
+        additionalCSS += `--_link-width: ${
+          slideParent.width() - 40 - getCSSInt(slideParent, "padding-right")
+        }px;`;
+      } else {
+        additionalCSS += `--_link-width: calc(100% - 60px);`;
+      }
+    }
+
+    additionalCSS += '"';
+
+    $(el).append(createInfoContainer(getLinkID(el), additionalCSS));
+  })
 }
 
 function generateBGLinkInfoContainer() {
@@ -437,7 +484,7 @@ function generateBGLinkInfoContainer() {
 }
 
 function generateCTAInfoContainer() {
-  $(".rlc-links, .rlc-copygroup, .rlc-textgroup, .rlc-back-arrow-group").each((i, linksContainer) => {
+  $(".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul").each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
     const isTooManyLinks = checkTooManyLinks(linksContainer);
@@ -445,9 +492,11 @@ function generateCTAInfoContainer() {
     if (isTooManyLinks) {
       let html = "";
       let CTAFont = "";
-      $(linksContainer)
-        .find(".rlc-pillbutton, .rlc-linecta, a")
-        .each((i, el) => {
+      let ctaList = $(linksContainer).hasClass('rlc-ul')
+        ? $(linksContainer).find(".rlc-pillbutton, .rlc-linecta, a")
+        : $(linksContainer).children(".rlc-pillbutton, .rlc-linecta, a")
+      
+      ctaList.each((i, el) => {
           if (shouldIgnoreLink(el)) return;
           const fontFamily = getFontDetails(el);
           const isSameFont = CTAFont === fontFamily;
@@ -465,24 +514,27 @@ function generateCTAInfoContainer() {
 
           if (linkID) {
             html += `
-              <span class='rlc-ab-divider' style='opacity: 0.5;'></span>
-              🔍 ID:<br>
-              ${linkID}
+              🔍 ID: ${linkID}          
               <span class='rlc-ab-divider'></span>
             `;
           }
         });
+      
+      $(linksContainer)
+      
+      if(!html) return
 
       addPositionToEl(linksContainer);
       addZIndexToCarousel(linksContainer);
-      $(linksContainer).append(createInfoContainer(html, `style="left:0;"`));
+      $(linksContainer).append(createInfoContainer(html, `data-links="many"`));
       return;
     }
 
     $(linksContainer)
-      .find(".rlc-pillbutton, .rlc-linecta, .rlc-target, a")
+      .children(".rlc-pillbutton, .rlc-linecta, .rlc-target, a")
       .each((j, el) => {
         if (shouldIgnoreLink(el)) return;
+
         addPositionToEl(el);
         addZIndexToCarousel(el);
         const linkID = getLinkID(el);
@@ -571,6 +623,31 @@ function generateCTAInfoContainer() {
   });
 }
 
+function generateNavLinkInfoContainer(){
+  // for nav links
+  $(".rlc-navcta").each((j, el) => {
+        if (shouldIgnoreLink(el)) return;
+        addPositionToEl(el);
+        addZIndexToCarousel(el);
+        const linkID = getLinkID(el);
+
+        let html = `
+            🔍 font: <br>
+            ${getFontDetails(el)} <br>
+        `;
+
+        if (linkID) {
+          html += `
+            <span class='rlc-ab-divider'></span>
+            🔍 ID: <br>
+            ${linkID}
+          `;
+        }
+
+        $(el).append(createInfoContainer(html));
+      });
+}
+
 function generateQuickShopInfoContainer() {
   $(".rlc-target.is-quick-shoppable.rlc-qs_ready").each((i, el) => {
     if (checkInfoContainerExist(el)) return;
@@ -637,12 +714,32 @@ function createInfoContainer(ab, attr = "") {
 }
 
 function checkInfoContainerExist(el) {
-  return !!$(el).find(".rlc-info-container").length;
+  return !!$(el).find("> .rlc-info-container").length;
 }
 
 function getLinkID(el) {
   if (!$(el).is("a")) {
     return "";
+  }
+
+  if(
+    el.href.includes("youtube") || 
+    el.href.includes("instagram") 
+  ) {
+    console.log('has youtube')
+    return `
+      external link: <br>
+      ${el.href}
+    `
+  }
+
+  if(
+    el.href.includes('#') || 
+    $(el).hasClass('rlc-jumplink')
+  ) {
+    return `
+      Jump link: ${el.href.split('#')[1]}
+    `
   }
 
   const urlPart = el.href.includes(".co.")
@@ -659,20 +756,25 @@ function getLinkID(el) {
   }
 
   if (urlPart?.includes("search")) {
-    if (urlPart.split("search?")[1]) {
+    const searchQuery = urlPart.split("search")[1]
+    if (searchQuery === '' || searchQuery) {
       cgid = `
         <span class='rlc-dev-err'>
-          invalid CGID: <br>
-          ${urlPart.split("search?")[1].split("&")[0]}
+          ${searchQuery === '' ? 'missing CGID' : 'invalid CGID: <br>'} 
+          ${searchQuery !== '' ? urlPart?.split("search?")[1].split("&")[0] : ""}
         </span>
       `;
     }
   }
 
-  if (cgid?.includes("ab=")) {
-    cgid = `<span class='rlc-dev-err'>ab=${
-      urlPart.split("ab=")[1].split("&")[0]
-    }</span>`;
+  if (urlPart?.includes("ab=")) {
+    cgid = `
+      <span class='rlc-dev-err'>
+        contains ab tagging: <br>
+        ab=${urlPart.split("ab=")[1].split("&")[0]}
+      </span> <br>
+      ${cgid}
+    `;
   }
 
   // PID handling
@@ -684,10 +786,20 @@ function getLinkID(el) {
       const productInfo = urlPart.split(".html")[1];
       pid = productInfo.split("_")[0]?.replace("?dwvar", "");
       productColor = productInfo.split("_")[1]?.replace("colorname=", "");
+      if(productColor.includes('ab=')){
+        productColor = productColor.split('?ab=')[0]
+      }
     } else {
       pid = urlPart.split("-").at(-1).replace(".html", "");
     }
-    cgid = null;
+    cgid = cgid.includes('contains ab tagging') 
+    ? `
+      <span class='rlc-dev-err'>
+        contains ab tagging: <br>
+        ab=${urlPart.split("ab=")[1].split("&")[0]}
+      </span> 
+    ` 
+    : null;
   }
   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
   const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
@@ -696,6 +808,7 @@ function getLinkID(el) {
   const outOfStock = !!$(el).closest(".notinstock").length;
 
   return `
+
     ${cgid ? cgid + "<br>" : ""}
     ${pid ? "◻️ PID: " + pid : ""}
     ${
@@ -727,6 +840,9 @@ function hideID() {
     ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container"
   ).hide();
   $(".rlc-cta .rlc-info-container").hide()
+  $(".rlc-bg > a .rlc-info-container").hide()
+  $(".rlc-navcta .rlc-info-container").hide()
+  $(".rlc-ul .rlc-info-container").hide()
   removeZIndexFromCarousel();
   hideOverflow();
   isShowingAB = false;
@@ -749,6 +865,9 @@ function showID() {
   });
 
   $(".rlc-cta .rlc-info-container").show()
+  $(".rlc-bg > a .rlc-info-container").show()
+  $(".rlc-navcta .rlc-info-container").show()
+  $(".rlc-ul .rlc-info-container").show()
   isShowingAB = true;
 }
 
@@ -766,10 +885,12 @@ function generateCopyGroupInfoContainer(caid) {
         ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd"
       )
       .each((i, group) => {
-        if ($(group).children(".rlc-info-container").length) return;
+        if ($(group).children(".rlc-info-container").length){
+          return
+        }
 
         $(group)
-          .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand")
+          .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand, .rlc-copy, .rlc-quote, .rlc-sig, .rlc-label")
           .each((i, el) => {
             if ($(el).is("a") || $(el).html().includes("rlc-info-container"))
               return;
@@ -791,9 +912,10 @@ function generateCopyGroupInfoContainer(caid) {
         const slideParent = $(group).closest(".rlc-slide");
 
         if (slideParent.length) {
-          additionalCSS += `--_max-width: min(${
-            getCSSInt(slideParent, "width") - 48
-          }px, 500px);`;
+          const slideWidth = getCSSInt(slideParent, "width") - 48 < 250 
+            ? 500
+            : getCSSInt(slideParent, "width") - 48
+          additionalCSS += `--_max-width: min(${slideWidth}px, 500px);`;
         }
 
         // center ab-container if copy group is too big
@@ -817,6 +939,7 @@ function generateCopyGroupInfoContainer(caid) {
         // update position if copy group is at bottom of the container
         const blockContainer = $(container).closest(".rlc-block");
         if (
+          blockContainer.length && 
           $(container).offset().top -
             (blockContainer.offset().top + blockContainer.height()) <=
           50
@@ -843,9 +966,11 @@ function generateCopyGroupInfoContainer(caid) {
             ) {
               additionalCSS += `--_translateX: -50%; left: 50%;`;
             } else {
-              additionalCSS += `--_translateX: ${$(group).css(
-                "padding-left"
-              )};`;
+              if($(group).css("padding-left") !== $(group).css("padding-right")){
+                additionalCSS += `--_translateX: ${$(group).css(
+                  "padding-left"
+                )};`;
+              }
             }
           }
         }
@@ -882,7 +1007,11 @@ function generateSingleCopyInfoContainer(caid) {
     parent
       .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand")
       .each((i, el) => {
-        if ($(el).is("a") || $(parent).html().includes("rlc-info-container"))
+        if (
+          $(el).is("a") || 
+          // $(parent).html().includes("rlc-info-container")
+          $(parent).find("> .rlc-info-container").length
+        )
           return;
 
         html += `
@@ -916,6 +1045,26 @@ function generateSingleCopyInfoContainer(caid) {
         `)
     );
   });
+
+  $(`
+    ${caid} .rlc-intro:not(
+      :where(
+        .rlc-copygroup, 
+        .rlc-copygroup-in, 
+        .rlc-textgroup, 
+        .rlc-textgroup-in, 
+        .rlc-intro, 
+        .rlc-catslider-hd
+      ) > .rlc-intro)
+  `).each((i, el)=>{
+    if ($(el).html().includes("rlc-info-container")) return;
+    $(el).append(
+      createInfoContainer(`
+          ${$(el).text()}:<br>
+          ${getFontDetails(el)}<br>
+        `)
+    );
+  })
 }
 
 function toggleFont() {
@@ -924,7 +1073,7 @@ function toggleFont() {
 
 function hideFont() {
   const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd";
+    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy";
 
   $(`:where(${groupClasses}) > .rlc-info-container`).hide();
   $(
@@ -943,7 +1092,7 @@ function hideFont() {
 
 function showFont() {
   const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd";
+    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy";
 
   $(`:where(${groupClasses}) > .rlc-info-container`).show();
   $(

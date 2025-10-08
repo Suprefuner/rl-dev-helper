@@ -134,6 +134,14 @@ li.rlc-dev-item {
   z-index: 999;
 }
 
+.rlc-info-container[data-links='many']{
+  --_translateY: -50%;
+  top: 20%;
+  left: 0;
+  /* left: 50%; */
+}
+
+.rlc-navcta:has(.rlc-info-container),
 .rlc-pillbutton:has(.rlc-info-container) {
   white-space: normal;
 }
@@ -142,8 +150,13 @@ li.rlc-dev-item {
   color: white !important;
 }
 
+.rlc-navcta .rlc-info-container,
 .rlc-pillbutton .rlc-info-container {
   white-space: normal;
+}
+
+.rlc-ul .rlc-info-container{
+  top: 0;
 }
 
 .rlc-slide .rlc-info-container {
@@ -176,7 +189,8 @@ li.rlc-dev-item {
   overflow: visible;
 }
 
-.rlc-hotspot .rlc-info-container {
+.rlc-hotspot .rlc-info-container,
+.rlc-bg > a .rlc-info-container {
   top: 20px;
   left: 20px;
   transform: unset;
@@ -195,6 +209,15 @@ li.rlc-dev-item {
   top: 20px;
   left: 20px;
   transform: unset;
+}
+
+article:has(.rlc-navcta .rlc-info-container){
+  z-index: 999;
+}
+
+.rlc-navcta .rlc-info-container{
+  --_translateX: -50%;
+  top: 0;
 }
 
 .rlc-cards .rlc-info-container {
@@ -320,7 +343,7 @@ header[class^="rlc-catslider"] .rlc-info-container {
 }
 
 .rlc-dev-err {
-  color: var(--_rlc-dev-red);
+  color: var(--_rlc-dev-red) !important;
   font-weight: bold;
 }
 
@@ -613,4 +636,12 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 /* only transparent header need to lower the hero banner image info container */
 body:has(header.transparent) #main .open-html-content:has(.rlc-creative_v3) article:first-of-type .rlc-dev-image-name-container{
   top: calc(60px + var(--_offset));
+}
+
+/* MARK: pinkpony */
+.rlc-slide:has(.rlc-sig).rlc-active .rlc-info-container{
+  display: block;
+}
+.rlc-slide:has(.rlc-sig):not(.rlc-active) .rlc-info-container{
+  display: none !important;
 }
