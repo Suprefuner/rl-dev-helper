@@ -300,9 +300,20 @@ function generateDevItems(list) {
   let html = "";
   list.forEach((item, i) => {
     const status = item?.status === "show";
-    const hasError = item?.checkError 
-      ? checkHasError(item.checkError) 
-      : null
+    let hasError = false
+
+    if(item?.checkError){
+      const list = checkHasError(item.checkError).list 
+      hasError = checkHasError(item.checkError).hasError
+      
+      if(hasError){
+        const listNotUnderFlyout = [...list].filter((el)=>(
+          !$(el).closest('.rlc-flyout').length
+        ))
+
+        hasError = !!listNotUnderFlyout.length
+      }
+    }
 
     html += `
       <li 
@@ -312,7 +323,7 @@ function generateDevItems(list) {
         data-state="${status ? "on" : "off"}"
       >
           ${" " + item.name}
-          ${hasError !== null && hasError ? "🔴" : ""}
+          ${hasError ? "🔴" : ""}
       </li>
     `;
   });
@@ -726,7 +737,6 @@ function getLinkID(el) {
     el.href.includes("youtube") || 
     el.href.includes("instagram") 
   ) {
-    console.log('has youtube')
     return `
       external link: <br>
       ${el.href}

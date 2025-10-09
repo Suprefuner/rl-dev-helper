@@ -134,5 +134,8 @@ function getIconPath(icon){
 }
 
 function checkHasError(target){
-  return !!$(target).length
+  return {
+    hasError: !!$(target).length,
+    list: $(target),
+  }
 }

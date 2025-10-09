@@ -185,6 +185,7 @@ li.rlc-dev-item {
 
 .rlc-cta.rlc-arrow:has(.rlc-info-container),
 .rlc-linecta:has(.rlc-arrow-link):has(.rlc-info-container),
+.rlc-linecta:has(svg):has(.rlc-info-container),
 .rlc-linecta.rlc-cta-arrow:has(.rlc-info-container) {
   overflow: visible;
 }
