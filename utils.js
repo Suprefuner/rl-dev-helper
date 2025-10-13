@@ -54,6 +54,19 @@ function getFontDetails(el) {
     isCorrectFontFamily = false;
   }
 
+  if(!isCorrectFontFamily){
+    if(fontFamily.toLowerCase().includes(",")) {
+      if(
+        fontFamily.toLowerCase().includes('lhf') ||
+        fontFamily.toLowerCase().includes('adobe') ||
+        fontFamily.toLowerCase().includes('archive') ||
+        fontFamily.toLowerCase().includes('franklin')
+      ) {
+        isCorrectFontFamily = true
+      }
+    }
+  }
+
   if (!isCorrectFontFamily) {
     fontFamily = `<span class='rlc-dev-err'>${fontFamily}</span>`;
   }

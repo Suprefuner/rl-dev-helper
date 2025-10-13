@@ -495,7 +495,7 @@ function generateBGLinkInfoContainer() {
 }
 
 function generateCTAInfoContainer() {
-  $(".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul").each((i, linksContainer) => {
+  $(".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta").each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
     const isTooManyLinks = checkTooManyLinks(linksContainer);
@@ -612,6 +612,7 @@ function generateCTAInfoContainer() {
 
         if ($(el).closest("a").css("overflow") === "hidden") {
           adContainerCSS += `overflow: visible;`;
+          $(el).closest("a").css("overflow", "visible")
         }
 
         adContainerCSS += '"';
@@ -853,6 +854,7 @@ function hideID() {
   $(".rlc-bg > a .rlc-info-container").hide()
   $(".rlc-navcta .rlc-info-container").hide()
   $(".rlc-ul .rlc-info-container").hide()
+  $(".rlc-back-cta .rlc-info-container").hide()
   removeZIndexFromCarousel();
   hideOverflow();
   isShowingAB = false;
@@ -878,6 +880,7 @@ function showID() {
   $(".rlc-bg > a .rlc-info-container").show()
   $(".rlc-navcta .rlc-info-container").show()
   $(".rlc-ul .rlc-info-container").show()
+  $(".rlc-back-cta .rlc-info-container").show()
   isShowingAB = true;
 }
 
