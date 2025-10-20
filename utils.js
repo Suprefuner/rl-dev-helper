@@ -102,6 +102,9 @@ function addZIndexToCarousel(el) {
     return;
 
   carouselEl.find(".rlc-slide").each((i, slide) => {
+    // fix rlc-page-anchors z-index UI bug
+    if($(slide).find('.rlc-page-anchors').length) return
+
     $(slide).addClass("rlc-carousel-dev-z-index");
     $(slide).css("z-index", `-${i + 1}`);
   });
@@ -151,4 +154,11 @@ function checkHasError(target){
     hasError: !!$(target).length,
     list: $(target),
   }
+}
+
+function disableDevItem(devItem){
+  devItem
+    .addClass("rlc-disabled")
+    .removeAttr("data-state")
+    .attr("data-status", "no");
 }

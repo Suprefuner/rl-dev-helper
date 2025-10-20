@@ -16,45 +16,54 @@ if (!window._rlcDevHelper) {
     isShowingImageInfo: false,
   };
 
+  /*
+    name: feature's name
+    fn: feature's logic
+    status: show | hide (default: hide)
+    checkError: CSS selectors for .rlc-dev-err
+    validation: validate if should run function when click
+  */
   window.helperList = [
-    { 
-      name: "CGID/PID", 
-      fn: "toggleID", 
-      checkError: ':where(a, .rlc-cta, .rlc-linecta, .rlc-pillbutton):has(.rlc-dev-err)' 
+    {
+      name: "CGID/PID",
+      fn: "toggleID",
+      checkError:
+        ":where(a, .rlc-cta, .rlc-linecta, .rlc-pillbutton):has(.rlc-dev-err)",
     },
-    { 
-      name: "font family", 
-      fn: "toggleFont", 
-      checkError: '*:not(a):has(>.rlc-info-container .rlc-dev-err)' 
+    {
+      name: "font family",
+      fn: "toggleFont",
+      checkError: "*:not(a):has(>.rlc-info-container .rlc-dev-err)",
     },
     {
       name: "product colors",
       fn: toggleProdColor,
       validation: () => $('[data-action="normalswatchescolor"]').length,
     },
-    { 
-      name: "video URL", 
-      fn: toggleVidUrl },
-    { 
-      name: "missing images", 
-      fn: toggleMissingImages, 
-      status: "show" },
-    { 
-      name: "image info", 
-      fn: toggleImageInfo },
+    {
+      name: "video URL",
+      fn: toggleVidUrl,
+    },
+    {
+      name: "missing images",
+      fn: toggleMissingImages,
+      status: "show",
+    },
+    {
+      name: "image info",
+      fn: toggleImageInfo,
+    },
   ];
 }
 
 // prevent multiple init
 if (!$(".rlc-dev-helper").length) {
-  helperInit();
   helperButtonInit();
+  helperInit();
   bindEvent();
 }
 
 function helperInit() {
-  
-
   // generate CTA info container
   generateHotspotInfoContainer();
   generateBGLinkInfoContainer();
@@ -72,6 +81,9 @@ function helperInit() {
 
   // generate missing image name
   generateImageInfo(window.caid);
+
+  // check if there is any video
+  checkIfVid(window.caid);
 
   // hide info container at the beginning
   hideID();
@@ -237,15 +249,6 @@ function bindEvent() {
     );
   });
 
-  // missing image container close button
-  $(document).on(
-    "click.rlcDevHelper",
-    '.rlc-dev-icon[data-action="close"]',
-    function () {
-      $('.rlc-dev-item[data-index="4"]')[0].click();
-    }
-  );
-
   // missing image container copy all button
   $(document).on(
     "click.rlcDevHelper",
@@ -261,6 +264,21 @@ function bindEvent() {
 
   $(document).on(
     "click.rlcDevHelper",
+    ".rlc-dev-missing-image-header .rlc-dev-check-again",
+    function () {
+      const currentPosition = $(window).scrollTop();
+
+      $(".rlc-dev-missing-image").each((i, img) => {
+        $(img).eq(0).click();
+      });
+
+      if ($(".rlc-dev-missing-image").length) return;
+      updateNoMissingImage();
+    }
+  );
+
+  $(document).on(
+    "click.rlcDevHelper",
     ".rlc-dev-missing-image .rlc-dev-icon[data-action='copy']",
     async function () {
       const copyContent = $(this)
@@ -271,6 +289,30 @@ function bindEvent() {
       copy(copyContent, $(this));
     }
   );
+
+  // missing image container close button
+  $(document).on(
+    "click.rlcDevHelper",
+    '.rlc-dev-icon[data-action="close"]',
+    function () {
+      $('.rlc-dev-item[data-index="4"]')[0].click();
+    }
+  );
+
+  $(document).on("keyup.rlcDevHelper", function (e) {
+    if (e.key === "`") {
+      $(".rlc-btn--dev")[0].click();
+      return;
+    }
+
+    const targetDevItem = +e.key;
+
+    if (targetDevItem === "NaN") return;
+
+    $(`.rlc-dev-item[data-index='${targetDevItem - 1}']`)
+      ?.eq(0)
+      .click();
+  });
 }
 
 function toggleProdColor() {
@@ -295,23 +337,23 @@ function toggleMissingImages() {
     !window.devHelperState.isShowingMissingImages;
 }
 
-// MARK: dev helperß
+// MARK: dev helper
 function generateDevItems(list) {
   let html = "";
   list.forEach((item, i) => {
     const status = item?.status === "show";
-    let hasError = false
+    let hasError = false;
 
-    if(item?.checkError){
-      const list = checkHasError(item.checkError).list 
-      hasError = checkHasError(item.checkError).hasError
-      
-      if(hasError){
-        const listNotUnderFlyout = [...list].filter((el)=>(
-          !$(el).closest('.rlc-flyout').length
-        ))
+    if (item?.checkError) {
+      const list = checkHasError(item.checkError).list;
+      hasError = checkHasError(item.checkError).hasError;
 
-        hasError = !!listNotUnderFlyout.length
+      if (hasError) {
+        const listNotUnderFlyout = [...list].filter(
+          (el) => !$(el).closest(".rlc-flyout").length
+        );
+
+        hasError = !!listNotUnderFlyout.length;
       }
     }
 
@@ -428,7 +470,7 @@ function generateHotspotInfoContainer() {
     $(el).html(createInfoContainer(getLinkID(el), additionalCSS));
   });
 
-  $(".rlc-bg > a").each((i, el)=>{
+  $(".rlc-bg > a").each((i, el) => {
     if (
       checkInfoContainerExist(el) ||
       shouldIgnoreLink(el) ||
@@ -470,7 +512,7 @@ function generateHotspotInfoContainer() {
     additionalCSS += '"';
 
     $(el).append(createInfoContainer(getLinkID(el), additionalCSS));
-  })
+  });
 }
 
 function generateBGLinkInfoContainer() {
@@ -495,7 +537,9 @@ function generateBGLinkInfoContainer() {
 }
 
 function generateCTAInfoContainer() {
-  $(".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta").each((i, linksContainer) => {
+  $(
+    ".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta"
+  ).each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
     const isTooManyLinks = checkTooManyLinks(linksContainer);
@@ -503,37 +547,37 @@ function generateCTAInfoContainer() {
     if (isTooManyLinks) {
       let html = "";
       let CTAFont = "";
-      let ctaList = $(linksContainer).hasClass('rlc-ul')
+      let ctaList = $(linksContainer).hasClass("rlc-ul")
         ? $(linksContainer).find(".rlc-pillbutton, .rlc-linecta, a")
-        : $(linksContainer).children(".rlc-pillbutton, .rlc-linecta, a")
-      
+        : $(linksContainer).children(".rlc-pillbutton, .rlc-linecta, a");
+
       ctaList.each((i, el) => {
-          if (shouldIgnoreLink(el)) return;
-          const fontFamily = getFontDetails(el);
-          const isSameFont = CTAFont === fontFamily;
+        if (shouldIgnoreLink(el)) return;
+        const fontFamily = getFontDetails(el);
+        const isSameFont = CTAFont === fontFamily;
 
-          if (!isSameFont) {
-            CTAFont = fontFamily;
-          }
+        if (!isSameFont) {
+          CTAFont = fontFamily;
+        }
 
-          const linkID = getLinkID(el);
+        const linkID = getLinkID(el);
 
-          html += `
+        html += `
             ${$(el).text()}: <br>
             ${!isSameFont ? getFontDetails(el) + "<br>" : ""}
           `;
 
-          if (linkID) {
-            html += `
+        if (linkID) {
+          html += `
               🔍 ID: ${linkID}          
               <span class='rlc-ab-divider'></span>
             `;
-          }
-        });
-      
-      $(linksContainer)
-      
-      if(!html) return
+        }
+      });
+
+      $(linksContainer);
+
+      if (!html) return;
 
       addPositionToEl(linksContainer);
       addZIndexToCarousel(linksContainer);
@@ -612,7 +656,7 @@ function generateCTAInfoContainer() {
 
         if ($(el).closest("a").css("overflow") === "hidden") {
           adContainerCSS += `overflow: visible;`;
-          $(el).closest("a").css("overflow", "visible")
+          $(el).closest("a").css("overflow", "visible");
         }
 
         adContainerCSS += '"';
@@ -635,29 +679,29 @@ function generateCTAInfoContainer() {
   });
 }
 
-function generateNavLinkInfoContainer(){
+function generateNavLinkInfoContainer() {
   // for nav links
   $(".rlc-navcta").each((j, el) => {
-        if (shouldIgnoreLink(el)) return;
-        addPositionToEl(el);
-        addZIndexToCarousel(el);
-        const linkID = getLinkID(el);
+    if (shouldIgnoreLink(el)) return;
+    addPositionToEl(el);
+    addZIndexToCarousel(el);
+    const linkID = getLinkID(el);
 
-        let html = `
+    let html = `
             🔍 font: <br>
             ${getFontDetails(el)} <br>
         `;
 
-        if (linkID) {
-          html += `
+    if (linkID) {
+      html += `
             <span class='rlc-ab-divider'></span>
             🔍 ID: <br>
             ${linkID}
           `;
-        }
+    }
 
-        $(el).append(createInfoContainer(html));
-      });
+    $(el).append(createInfoContainer(html));
+  });
 }
 
 function generateQuickShopInfoContainer() {
@@ -701,12 +745,7 @@ function generateQuickShopInfoContainer() {
 }
 
 function shouldIgnoreLink(el) {
-  const ignoreClassList = [
-    "rlc-tag_ignore",
-    "rlc-page-anchors",
-    "rlc-popblive",
-    "rlc-popyoutube",
-  ];
+  const ignoreClassList = ["rlc-tag_ignore", "rlc-popblive", "rlc-popyoutube"];
 
   for (let i = 0; i < ignoreClassList.length; i++) {
     if ($(el).hasClass(ignoreClassList[i])) {
@@ -734,23 +773,21 @@ function getLinkID(el) {
     return "";
   }
 
-  if(
-    el.href.includes("youtube") || 
-    el.href.includes("instagram") 
-  ) {
+  if (el.href.includes("youtube") || el.href.includes("instagram")) {
     return `
       external link: <br>
       ${el.href}
-    `
+    `;
   }
 
-  if(
-    el.href.includes('#') || 
-    $(el).hasClass('rlc-jumplink')
+  if (
+    el.href.includes("#") ||
+    $(el).hasClass("rlc-jumplink") ||
+    $(el).hasClass("rlc-page-anchors")
   ) {
     return `
-      Jump link: ${el.href.split('#')[1]}
-    `
+      Jump link: ${el.href.split("#")[1]}
+    `;
   }
 
   const urlPart = el.href.includes(".co.")
@@ -767,12 +804,14 @@ function getLinkID(el) {
   }
 
   if (urlPart?.includes("search")) {
-    const searchQuery = urlPart.split("search")[1]
-    if (searchQuery === '' || searchQuery) {
+    const searchQuery = urlPart.split("search")[1];
+    if (searchQuery === "" || searchQuery) {
       cgid = `
         <span class='rlc-dev-err'>
-          ${searchQuery === '' ? 'missing CGID' : 'invalid CGID: <br>'} 
-          ${searchQuery !== '' ? urlPart?.split("search?")[1].split("&")[0] : ""}
+          ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"} 
+          ${
+            searchQuery !== "" ? urlPart?.split("search?")[1].split("&")[0] : ""
+          }
         </span>
       `;
     }
@@ -789,6 +828,12 @@ function getLinkID(el) {
   }
 
   // PID handling
+  if (!!$(el).closest(".notfound").length) {
+    return `
+      <span class="rlc-dev-err">Invalid PID</span>
+    `;
+  }
+
   let pid = null;
   let productColor = null;
 
@@ -797,20 +842,20 @@ function getLinkID(el) {
       const productInfo = urlPart.split(".html")[1];
       pid = productInfo.split("_")[0]?.replace("?dwvar", "");
       productColor = productInfo.split("_")[1]?.replace("colorname=", "");
-      if(productColor.includes('ab=')){
-        productColor = productColor.split('?ab=')[0]
+      if (productColor.includes("ab=")) {
+        productColor = productColor.split("?ab=")[0];
       }
     } else {
       pid = urlPart.split("-").at(-1).replace(".html", "");
     }
-    cgid = cgid.includes('contains ab tagging') 
-    ? `
+    cgid = cgid.includes("contains ab tagging")
+      ? `
       <span class='rlc-dev-err'>
         contains ab tagging: <br>
         ab=${urlPart.split("ab=")[1].split("&")[0]}
       </span> 
-    ` 
-    : null;
+    `
+      : null;
   }
   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
   const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
@@ -819,7 +864,6 @@ function getLinkID(el) {
   const outOfStock = !!$(el).closest(".notinstock").length;
 
   return `
-
     ${cgid ? cgid + "<br>" : ""}
     ${pid ? "◻️ PID: " + pid : ""}
     ${
@@ -850,11 +894,11 @@ function hideID() {
   $(
     ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container"
   ).hide();
-  $(".rlc-cta .rlc-info-container").hide()
-  $(".rlc-bg > a .rlc-info-container").hide()
-  $(".rlc-navcta .rlc-info-container").hide()
-  $(".rlc-ul .rlc-info-container").hide()
-  $(".rlc-back-cta .rlc-info-container").hide()
+  $(".rlc-cta .rlc-info-container").hide();
+  $(".rlc-bg > a .rlc-info-container").hide();
+  $(".rlc-navcta .rlc-info-container").hide();
+  $(".rlc-ul .rlc-info-container").hide();
+  $(".rlc-back-cta .rlc-info-container").hide();
   removeZIndexFromCarousel();
   hideOverflow();
   isShowingAB = false;
@@ -876,11 +920,11 @@ function showID() {
     $(el).show();
   });
 
-  $(".rlc-cta .rlc-info-container").show()
-  $(".rlc-bg > a .rlc-info-container").show()
-  $(".rlc-navcta .rlc-info-container").show()
-  $(".rlc-ul .rlc-info-container").show()
-  $(".rlc-back-cta .rlc-info-container").show()
+  $(".rlc-cta .rlc-info-container").show();
+  $(".rlc-bg > a .rlc-info-container").show();
+  $(".rlc-navcta .rlc-info-container").show();
+  $(".rlc-ul .rlc-info-container").show();
+  $(".rlc-back-cta .rlc-info-container").show();
   isShowingAB = true;
 }
 
@@ -898,12 +942,14 @@ function generateCopyGroupInfoContainer(caid) {
         ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd"
       )
       .each((i, group) => {
-        if ($(group).children(".rlc-info-container").length){
-          return
+        if ($(group).children(".rlc-info-container").length) {
+          return;
         }
 
         $(group)
-          .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand, .rlc-copy, .rlc-quote, .rlc-sig, .rlc-label")
+          .children(
+            ".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand, .rlc-copy, .rlc-quote, .rlc-sig, .rlc-label"
+          )
           .each((i, el) => {
             if ($(el).is("a") || $(el).html().includes("rlc-info-container"))
               return;
@@ -925,9 +971,10 @@ function generateCopyGroupInfoContainer(caid) {
         const slideParent = $(group).closest(".rlc-slide");
 
         if (slideParent.length) {
-          const slideWidth = getCSSInt(slideParent, "width") - 48 < 250 
-            ? 500
-            : getCSSInt(slideParent, "width") - 48
+          const slideWidth =
+            getCSSInt(slideParent, "width") - 48 < 250
+              ? 500
+              : getCSSInt(slideParent, "width") - 48;
           additionalCSS += `--_max-width: min(${slideWidth}px, 500px);`;
         }
 
@@ -952,10 +999,10 @@ function generateCopyGroupInfoContainer(caid) {
         // update position if copy group is at bottom of the container
         const blockContainer = $(container).closest(".rlc-block");
         if (
-          blockContainer.length && 
+          blockContainer.length &&
           $(container).offset().top -
             (blockContainer.offset().top + blockContainer.height()) <=
-          50
+            50
         ) {
           additionalCSS += `--_translateY: 0; bottom: 0; top: unset;`;
         }
@@ -979,7 +1026,9 @@ function generateCopyGroupInfoContainer(caid) {
             ) {
               additionalCSS += `--_translateX: -50%; left: 50%;`;
             } else {
-              if($(group).css("padding-left") !== $(group).css("padding-right")){
+              if (
+                $(group).css("padding-left") !== $(group).css("padding-right")
+              ) {
                 additionalCSS += `--_translateX: ${$(group).css(
                   "padding-left"
                 )};`;
@@ -1021,7 +1070,7 @@ function generateSingleCopyInfoContainer(caid) {
       .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand")
       .each((i, el) => {
         if (
-          $(el).is("a") || 
+          $(el).is("a") ||
           // $(parent).html().includes("rlc-info-container")
           $(parent).find("> .rlc-info-container").length
         )
@@ -1069,7 +1118,7 @@ function generateSingleCopyInfoContainer(caid) {
         .rlc-intro, 
         .rlc-catslider-hd
       ) > .rlc-intro)
-  `).each((i, el)=>{
+  `).each((i, el) => {
     if ($(el).html().includes("rlc-info-container")) return;
     $(el).append(
       createInfoContainer(`
@@ -1077,7 +1126,7 @@ function generateSingleCopyInfoContainer(caid) {
           ${getFontDetails(el)}<br>
         `)
     );
-  })
+  });
 }
 
 function toggleFont() {
@@ -1098,8 +1147,8 @@ function hideFont() {
   $(".rlc-header > .rlc-info-container").hide();
 
   // remove overflow visible CSS override from showFont()
-  $('.rlc-block:has(.rlc-info-container)').removeAttr('style')
-  
+  $(".rlc-block:has(.rlc-info-container)").removeAttr("style");
+
   isShowingFont = false;
 }
 
@@ -1115,13 +1164,15 @@ function showFont() {
     `*:has(>.rlc-dek:not(:where(${groupClasses}) .rlc-dek)) > .rlc-info-container`
   ).show();
   $(".rlc-header > .rlc-info-container").show();
-  
+
   // only update the overflow if the target isn't in slider
-  $('.rlc-block:not(:has(.rlc-slide)):has(.rlc-info-container)').each((i, el)=>{
-    if($(el).css('overflow') === 'hidden'){
-      $(el).css('overflow', 'visible')
+  $(".rlc-block:not(:has(.rlc-slide)):has(.rlc-info-container)").each(
+    (i, el) => {
+      if ($(el).css("overflow") === "hidden") {
+        $(el).css("overflow", "visible");
+      }
     }
-  })
+  );
   isShowingFont = true;
 }
 
@@ -1194,8 +1245,16 @@ function hideVidUrl() {
   $(".rlc-videocontainer .rlc-dev-video-container").remove();
 }
 
+function checkIfVid(caid) {
+  if (!$(`${caid} .rlc-hasvideo.rlc-vidLoaded`).length) {
+    disableDevItem($('.rlc-dev-item[data-index="3"]'));
+  }
+}
+
 // MARK: Missing Image
 function checkMissingImage(caid) {
+  const scrollPos = $(window).scrollTop();
+
   if (!window.hasCheckedMissingImage) {
     window.scrollTo(0, document.body.offsetHeight);
   }
@@ -1233,7 +1292,7 @@ function checkMissingImage(caid) {
       });
     }
 
-    window.scrollTo(0, 0);
+    window.scrollTo(0, scrollPos);
 
     $(`${caid} img`).each(function (i) {
       const img = $(this);
@@ -1303,8 +1362,14 @@ function generateMissingImageContainer(missingImages) {
           Missing images found: 
         </h4>
         
-        <div class='rlc-dev-check-again'>
-          Check again
+        <div class='rlc-dev-btns'>
+          <div class='rlc-dev-copy-all'>
+            Copy all
+          </div>
+
+          <div class='rlc-dev-check-again'>
+            Check again
+          </div>
         </div>
       </header>
       <ul class="rlc-dev-missing-images">
@@ -1335,7 +1400,7 @@ function generateMissingImageItem(missingImages) {
         slideIndex = slideParent.find(".rlc-slide").index(slideEl);
       }
 
-      const ordinal = slideIndex < 4 ? ordinalList[slideIndex] : "th";
+      const ordinal = slideIndex < 3 ? ordinalList[slideIndex] : "th";
 
       return `
         <li class='rlc-dev-missing-image' data-missing='#${img.id}'>
@@ -1371,15 +1436,12 @@ function removeMissingImageItemStyle(el) {
     .css("--_height", "auto");
 }
 
-function updateNoMissingImage() {
-  const missingImageDevHelperItem = $('.rlc-dev-item[data-index="4"]');
-  missingImageDevHelperItem
-    .addClass("rlc-disabled")
-    .removeAttr("data-state")
-    .attr("data-status", "no");
+function updateNoMissingImage(devItem) {
+  const missingImageDevItem = $('.rlc-dev-item[data-index="4"]');
+  disableDevItem(missingImageDevItem);
 
-  if (!missingImageDevHelperItem.text().includes("✅")) {
-    missingImageDevHelperItem.append(" ✅");
+  if (!missingImageDevItem.text().includes("✅")) {
+    missingImageDevItem.append(" ✅");
   }
 
   $(".rlc-dev-missing-image-container").remove();

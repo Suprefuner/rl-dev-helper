@@ -539,7 +539,13 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   color: white;
 }
 
-.rlc-dev-missing-image-header .rlc-dev-copy-all{
+.rlc-dev-missing-image-header .rlc-dev-btns{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rlc-dev-missing-image-header .rlc-dev-btns > div{
   color: black;
   background-color: white;
   padding: 5px;
@@ -646,4 +652,9 @@ body:has(header.transparent) #main .open-html-content:has(.rlc-creative_v3) arti
 }
 .rlc-slide:has(.rlc-sig):not(.rlc-active) .rlc-info-container{
   display: none !important;
+}
+
+/* MARK: product target */
+body:has(.rlc-dev-item[data-index='0'][data-state='on']) .notfound .is-quick-shoppable.rlc-target:has(.rlc-info-container){
+  display: block !important;
 }
