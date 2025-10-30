@@ -699,13 +699,17 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   width: 90%;
   max-width: 600px;
   padding: 6px 12px;
+
   background-color: var(--_rlc-dev-black-bg);
   font-family: "Founders Grotesk text Regular", Helvetica, Arial, sans-serif !important;
   font-size: 16px !important;
   color: white !important;
   text-align: left !important;
-  border-radius: 5px;
 
+  text-wrap-mode: wrap;
+  overflow-wrap: break-word;
+
+  border-radius: 5px;
   transition: background-color .3s;
 }
 
@@ -719,11 +723,6 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 
 div:has( > .rlc-dev-image-name-container:hover){
   z-index: 1;
-}
-
-/* transparent header need to lower the hero banner image info container */
-body:has(header.transparent) #main .open-html-content:has(.rlc-creative_v3) article:first-of-type .rlc-dev-image-name-container{
-  top: calc(60px + var(--_offset));
 }
 
 /* plp mb image info container need lower */
