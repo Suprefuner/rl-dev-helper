@@ -10,8 +10,20 @@
 
 3. **Load the Extension Locally**
 - Click "Load unpacked".
-![Load unpacked button position](./installation/step-3.png)
+![Load unpacked button position](.assets/images/installation/step-3.png)
 - Select the folder where you cloned or extracted this repository.
 
 You're Done! 🎉
 The extension should now appear in your Chrome toolbar or extensions list.
+
+### How to use
+Hotkeys Setup for activate extension: (Optional)
+1. Go to chrome://extensions/shortcuts
+2. Find RLC Dev Helper
+3. Assign your custom hot key
+
+Built-in Hotkeys
+| Key | Function |
+|-----|----------|
+| ` (backtick) | Toggle Dev Helper menu |
+| 1-6 | Trigger corresponding helper function |

@@ -25,9 +25,10 @@ chrome.action.onClicked.addListener((tab) => {
 
   chrome.storage.local.get(["isActive"], (result) => {
     const isActive = !result.isActive;
+    console.log({isActive})
     chrome.storage.local.set({ isActive }, () => {
       chrome.action.setIcon({
-        path: isActive ? "logo/active_logo.png" : "logo/inactive_logo.png",
+        path: isActive ? "../assets/images/logo/active_logo.png" : "../assets/images/logo/inactive_logo.png",
         tabId: tab.id,
       });
 
@@ -41,7 +42,18 @@ chrome.action.onClicked.addListener((tab) => {
             chrome.scripting.executeScript(
               {
                 target: { tabId: tab.id },
-                files: ["utils.js", "content.js"],
+                files: [
+                  "js/utils.js",
+                  "js/controller/dev-item.js",
+                  "js/controller/id.js",
+                  "js/controller/font.js",
+                  "js/controller/image.js",
+                  "js/controller/video.js",
+                  "js/controller/prod-color.js",
+                  "js/controller/missing-img.js",
+                  "js/config.js",
+                  "js/content.js",
+                ],
                 world: "MAIN",
               },
               () => {
@@ -60,23 +72,29 @@ chrome.action.onClicked.addListener((tab) => {
             chrome.scripting.executeScript(
               {
                 target: { tabId: tab.id },
-                files: ["utils.js"],
+                files: ["js/utils.js"],
                 world: "MAIN",
-              }, ()=>{
-chrome.scripting.executeScript({
-              target: { tabId: tab.id },
-              func: () => {
-                window.cleanUp();
-                window.rlcDevHelperLoaded = false;
               },
-              world: "MAIN",
-              }, () => {
-              isProcessing = false;
-            });
+              () => {
+                chrome.scripting.executeScript(
+                  {
+                    target: { tabId: tab.id },
+                    func: () => {
+                      window.cleanUp();
+                      window.rlcDevHelperLoaded = false;
+                    },
+                    world: "MAIN",
+                  },
+                  () => {
+                    isProcessing = false;
+                  }
+                );
+              }
+            );
           }
         );
       }
-  )}});
+    });
   });
 });
 
@@ -88,7 +106,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   ) {
     chrome.storage.local.set({ isActive: false }, () => {
       chrome.action.setIcon({
-        path: "logo/inactive_logo.png",
+        path: "../assets/images/logo/inactive_logo.png",
         tabId: tabId,
       });
       chrome.scripting.removeCSS(
@@ -97,37 +115,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
           files: ["style.css"],
         },
         () => {
-          chrome.scripting.executeScript({
-          target: { tabId: tabId },
-          files: ["utils.js"],
-          world: "MAIN",
-        }, () => {
-          chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            func: () => {
-              window.cleanUp();
-              // if (typeof window.cleanUp === "function") {
-              //   window.cleanUp();
-              // } else {
-              //   // Fallback cleanup
-              //   const elements = document.querySelectorAll(
-              //     ".rlc-dev-helper, .rlc-info-container, .rlc-dev-color-container, " +
-              //     ".rlc-dev-video-container, .rlc-dev-missing-image-container, .rlc-dev-missing-img"
-              //   );
-              //   elements.forEach(el => el.remove());
-              //   document.querySelectorAll(".rlc-carousel-dev-z-index").forEach(el => {
-              //     el.style.zIndex = "";
-              //     el.classList.remove("rlc-carousel-dev-z-index");
-              //   });
-              //   document.removeEventListener("click.rlcDevHelper");
-              //   document.removeEventListener("mouseover.rlcDevHelper");
-              //   document.removeEventListener("mouseout.rlcDevHelper");
-              // }
-              window.rlcDevHelperLoaded = false;
+          chrome.scripting.executeScript(
+            {
+              target: { tabId: tabId },
+              files: ["js/utils.js"],
+              world: "MAIN",
             },
-            world: "MAIN",
-          });
-        });
+            () => {
+              chrome.scripting.executeScript({
+                target: { tabId: tabId },
+                func: () => {
+                  window.cleanUp();
+                  window.rlcDevHelperLoaded = false;
+                },
+                world: "MAIN",
+              });
+            }
+          );
         }
       );
     });

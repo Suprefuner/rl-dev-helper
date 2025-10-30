@@ -6,15 +6,15 @@
   "permissions": ["activeTab", "scripting", "storage"],
   "action": {},
   "icons": {
-    "128": "logo/inactive_logo.png"
+    "128": "assets/images/logo/inactive_logo.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "js/background.js"
   },
   "web_accessible_resources": [
-  {
-    "resources": ["no-image.png"],
-    "matches": ["<all_urls>"]
-  }
-]
+    {
+      "resources": ["no-image.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
