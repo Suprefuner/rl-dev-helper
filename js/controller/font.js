@@ -65,8 +65,10 @@ function generateCopyGroupInfoContainer(caid) {
         if ($(container).offset().top - $(group).offset().top <= 120) {
           additionalCSS += `--_translateY: 0; bottom: unset; top: 0;`;
         }
-
+      
         if (
+          $(group).hasClass('rlc-catslider-hd') &&
+          $(group).css('display', 'flex') &&
           $(group).css('flex-direction', 'column') &&
           $(group).css('justify-content', 'center') 
         ) {
