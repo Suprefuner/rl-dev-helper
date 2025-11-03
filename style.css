@@ -229,6 +229,11 @@ body:has(.rlc-info-container:hover) .rlc-info-container:not(:hover){
   transform: unset;
 }
 
+.breadcrumb-element .rlc-info-container{
+  top: 0;
+  bottom: unset;
+}
+
 .notinstock .rlc-hotspot {
   display: block !important;
   pointer-events: none !important;
@@ -721,6 +726,13 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   background-color: black;
 }
 
+/* fix rlc-hotspot/rlc-bg_link/rlc-background image info container can't be hovered issue */
+:has(>.rlc-hotspot:hover) .rlc-imagery .rlc-dev-image-name-container,
+:has(>.rlc-imagery:hover) .rlc-imagery .rlc-dev-image-name-container,
+:has(.rlc-background):has(.rlc-background .rlc-dev-image-name-container):hover .rlc-background .rlc-dev-image-name-container{
+  background-color: black;
+}
+
 div:has( > .rlc-dev-image-name-container:hover){
   z-index: 1;
 }
@@ -799,3 +811,4 @@ body:has(.rlc-dev-item.rlc-dev-item--id[data-state='on']) #rlc-stickynav .rlc-wr
 body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .rlc-copygroup{
   opacity: 1 !important;
 }
+

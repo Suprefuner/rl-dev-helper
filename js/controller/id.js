@@ -112,7 +112,7 @@ function generateBGLinkInfoContainer() {
 
 function generateCTAInfoContainer() {
   $(
-    ".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta, #quickfilter-wrapper ul .filters-item, #rlc-stickynavbuttons .rlc-li"
+    ".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta, #quickfilter-wrapper ul .filters-item, #rlc-stickynavbuttons .rlc-li, .plp-info-breadcrumb-path"
   ).each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
@@ -502,7 +502,7 @@ function toggleID() {
 
 function hideID() {
   $(
-    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container"
+    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container"
   ).hide();
   $(".rlc-cta .rlc-info-container").hide();
   $(".rlc-bg > a .rlc-info-container").hide();
@@ -516,7 +516,7 @@ function hideID() {
 
 function showID() {
   $(
-    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container"
+    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container"
   ).each((i, el) => {
     addZIndexToCarousel(el);
 

@@ -17,7 +17,10 @@ function checkMissingImage(caid) {
         const totalSlide = sliderWrapperEl.find(".rlc-slide").length;
         const sliderPauseBtn = $(slider).find(".rlc-looppause")[0];
 
-        if (!$(slider).hasClass("user_paused")) {
+        if (
+          !$(slider).hasClass("user_paused") &&
+          sliderPauseBtn
+        ) {
           sliderPauseBtn.click();
         }
 
