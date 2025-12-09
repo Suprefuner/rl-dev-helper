@@ -451,10 +451,16 @@ header[class^="rlc-catslider"] .rlc-info-container {
   backdrop-filter: blur(3px);
   border-radius: 5px;
   cursor: copy;
+
+  transition: opacity .3s;
 }
 
 .rlc-dev-color-container:hover{
   background-color: black;
+}
+
+body:has(.rlc-dev-color-container:hover) .rlc-dev-color-container:not(:hover){
+  opacity: 0.2;
 }
 
 .rlc-dev-color-container[data-state="success"] {
@@ -742,6 +748,10 @@ div:has( > .rlc-dev-image-name-container:hover){
   top: calc(60px + var(--_offset));
 }
 
+[class^=rlc-imagery]:has(.rlc-dev-image-name-container){
+  position: relative;
+}
+
 /* MARK: pinkpony lp fix */
 .rlc-slide:has(.rlc-sig).rlc-active .rlc-info-container{
   display: block;
@@ -755,7 +765,7 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .rlc-creative_v3.rlc
   overflow: visible;
 }
 
-body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .rlc-prodinfo.rlc-cs {
+body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .notinstock .rlc-prodinfo.rlc-cs {
   display: block !important;
 }
 

@@ -3,6 +3,7 @@ function cleanUp() {
   $(".rlc-info-container").remove();
   $(".rlc-dev-color-container").remove();
   $(".rlc-dev-video-container").remove();
+  $(".rlc-dev-image-name-container").remove();
   $(".rlc-dev-missing-image-container").remove();
   $(".rlc-dev-missing-img").removeAttr("id");
 
