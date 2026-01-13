@@ -476,13 +476,36 @@ function getLinkID(el) {
     ${
       pid && outOfStock ? '<span class="rlc-dev-err">(Out of stock)</span>' : ""
     }
-    ${
-      pid && comingSoon ? '<span class="rlc-dev-err">(Coming soon)</span>' : ""
-    }
+    ${pid && comingSoon ? '<span class="rlc-dev-err">(Coming soon)</span>' : ""}
     ${pid ? "<br>" : ""}
     ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
     ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
   `;
+}
+
+function checkIfImageLinkSameAsCTA() {
+  const hotspotEls = $(
+    `${window.caid} .rlc-hotspot, ${window.caid} .rlc-bg_link`
+  );
+  hotspotEls.each((i, hotspotEl) => {
+    const containerEl = $(hotspotEl).closest(".rlc-block");
+    const lineCTA = containerEl.find(".rlc-linecta")[0];
+
+    if (!lineCTA) return;
+
+    const imageLink = $(hotspotEl).attr("href");
+    const CTALink = $(lineCTA).attr("href");
+
+    if (imageLink !== CTALink) {
+      $(hotspotEl).find(".rlc-info-container .rlc-p").html(`
+        <span class='rlc-dev-err'>
+          image link doesn't match CTA:<br>
+          image link: ${imageLink} <br>
+          CTA: ${CTALink}
+        </span>
+      `);
+    }
+  });
 }
 
 function checkIDTooLong(ab) {

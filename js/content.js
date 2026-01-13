@@ -19,6 +19,8 @@ function helperInit() {
   generateNavLinkInfoContainer();
   generateQuickShopInfoContainer();
 
+  checkIfImageLinkSameAsCTA();
+
   // generate copy info container
   generateCopyGroupInfoContainer(window.caid);
   generateSingleCopyInfoContainer(window.caid);
