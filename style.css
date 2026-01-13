@@ -822,3 +822,14 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .rlc-copygroup{
   opacity: 1 !important;
 }
 
+
+/* MARK:  */
+[id$='plp'] .rlc-info-container[data-type='ca']{
+  top: 100px;
+}
+
+.rlc-info-container[data-type='ca']{
+  top: 24px;
+  left: 24px;
+  transform: none;
+}

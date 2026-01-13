@@ -31,6 +31,12 @@ function helperInit() {
   hideFont();
   hideMissingImages();
   hideImageName();
+
+  // generate PLP CA name
+  if(window.isPLP) {
+    generateCAInfo()
+    hideCA()
+  }
 }
 
 // functions that check and disable the dev item
@@ -43,6 +49,9 @@ function helperButtonUpdate() {
 
   // check if there is any product color
   checkIfProdColor();
+
+  // check if PLP
+  checkIfPLP()
 }
 
 function bindEvent() {

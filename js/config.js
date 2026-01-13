@@ -14,6 +14,7 @@ if (!window._rlcDevHelper) {
     isShowingVidUrl: false,
     isShowingMissingImages: true,
     isShowingImageInfo: false,
+    isShowingCAInfo: false,
   };
 
   /*
@@ -58,6 +59,12 @@ if (!window._rlcDevHelper) {
       fn: toggleMissingImages,
       className: "missing-img",
       status: "show",
+    },
+    {
+      name: "slot CA",
+      fn: toggleCAInfo,
+      className: "ca",
+      validation: () => window.isPLP,
     },
   ];
 }

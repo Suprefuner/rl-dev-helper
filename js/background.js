@@ -51,6 +51,7 @@ chrome.action.onClicked.addListener((tab) => {
                   "js/controller/video.js",
                   "js/controller/prod-color.js",
                   "js/controller/missing-img.js",
+                  "js/controller/ca.js",
                   "js/config.js",
                   "js/content.js",
                 ],
