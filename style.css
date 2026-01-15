@@ -832,4 +832,5 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state='on']) .rlc-copygroup{
   top: 24px;
   left: 24px;
   transform: none;
+  z-index: 2;
 }
