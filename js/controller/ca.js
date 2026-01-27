@@ -12,7 +12,7 @@ function generateCAInfo() {
   $(`.ingrid`).each((i, ingrid) => {
     const ingridEl = $(ingrid).find(">div");
     const ingridContentEl = $(ingridEl).find("> section > article");
-    const ingridCA = ingridEl.attr("id").replaceAll("rlcid-", "");
+    const ingridCA = ingridEl?.attr("id")?.replaceAll("rlcid-", "");
 
     ingridContentEl.append(generateCAHTML(ingridCA));
   });

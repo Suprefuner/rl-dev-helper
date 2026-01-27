@@ -175,8 +175,17 @@ function enableDevItem(devItem) {
 }
 
 function positionHandler($qsBtn, device) {
-  if(!cleanQsJSONstr($qsBtn.dataset.position)) return
-  let qsPosData = JSON.parse(cleanQsJSONstr($qsBtn.dataset.position));
+  let qsBtnPosition = $qsBtn.dataset.position.replaceAll(' ', '')
+  // to prevent CA code has empty top or left position value
+  if(qsBtnPosition.includes("'left':}")) {
+    qsBtnPosition = qsBtnPosition.replaceAll("'left':}", "'left': null}")
+  } 
+  if(qsBtnPosition.includes("'top':}")) {
+    qsBtnPosition = qsBtnPosition.replaceAll("'top':}", "'top': null}")
+  }
+
+  if(!cleanQsJSONstr(qsBtnPosition)) return
+  let qsPosData = JSON.parse(cleanQsJSONstr(qsBtnPosition));
   let qsPos = qsPosData[device];
 
   if (qsPos) {
