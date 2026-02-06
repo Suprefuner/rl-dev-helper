@@ -32,3 +32,4 @@ Built-in Hotkeys
 | 4 | Trigger video inspector |
 | 5 | Trigger product color inspector |
 | 6 | Trigger missing image inspector |
+| 7 | Trigger PLP slot CA inspector |
