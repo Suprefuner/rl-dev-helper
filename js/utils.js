@@ -21,7 +21,8 @@ function getCSSInt(el, prop) {
 function getFontDetails(el) {
   const lang = $("html").attr("lang").split("_")[0].toLowerCase();
   let isCorrectFontFamily = true;
-  let fontFamily = window.getComputedStyle(el).getPropertyValue("font-family");
+  const hasSpanEl = !!$(el).find("span").length
+  let fontFamily = window.getComputedStyle(hasSpanEl ? $(el).find("span")[0] : el).getPropertyValue("font-family");
 
   if (lang === "en") {
     if (
