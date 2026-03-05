@@ -107,6 +107,7 @@ li.rlc-dev-item {
   position: absolute;
   bottom: 100%;
   left: 50%;
+  z-index: 2;
 
   background-color: var(--_rlc-dev-black-bg);
   border-radius: 10px;
@@ -397,6 +398,10 @@ header[class^="rlc-catslider"] .rlc-info-container {
 .rlc-header .rlc-info-container {
   --_translateX: -50%;
   --_translateY: -12px;
+}
+
+.rlc-info-container p{
+  margin-top: 0 !important;
 }
 
 .rlc-ab {

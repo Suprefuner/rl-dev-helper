@@ -488,7 +488,9 @@ function checkIfImageLinkSameAsCTA() {
     `${window.caid} .rlc-hotspot, ${window.caid} .rlc-bg_link`
   );
   hotspotEls.each((i, hotspotEl) => {
-    const containerEl = $(hotspotEl).closest(".rlc-block");
+    const containerEl = $(hotspotEl).closest(".rlc-slide").length 
+      ? $(hotspotEl).closest(".rlc-slide")
+      : $(hotspotEl).closest(".rlc-block");
     const lineCTA = containerEl.find(".rlc-linecta")[0];
 
     if (!lineCTA) return;
@@ -527,6 +529,7 @@ function hideID() {
   $(
     ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container"
   ).hide();
+  $(".rlc-pillbutton > .rlc-info-container").hide();
   $(".rlc-cta .rlc-info-container").hide();
   $(".rlc-bg > a .rlc-info-container").hide();
   $(".rlc-navcta .rlc-info-container").hide();
