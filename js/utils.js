@@ -52,6 +52,10 @@ function getFontDetails(el) {
     }
   }
 
+  if (fontFamily.toLowerCase().includes("rl_droidkufi")) {
+      isCorrectFontFamily = false;
+  }
+
   if (!fontFamily.toLowerCase().includes(",")) {
     isCorrectFontFamily = false;
   }

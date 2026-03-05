@@ -1,28 +1,79 @@
+// outer div of copies
+const COPYCONTAINER_CLASS_LIST = [
+  ".rlc-copylayer",
+  ".rlc-copygroup",
+  ".rlc-textgroup",
+  ".rlc-intro",
+  ".rlc-catslider-hd",
+];
+
+// inner div of copies
+const COPYGROUP_CLASS_LIST = [
+  ".rlc-copylayer",
+  ".rlc-copygroup",
+  ".rlc-copygroup-in",
+  ".rlc-textgroup",
+  ".rlc-textgroup-in",
+  ".rlc-intro",
+  ".rlc-catslider-hd",
+  ".rlc-in",
+  ".rlc-copylayer",
+];
+
+const COPYINNERGROUP_CLASS_LIST = [
+  ".rlc-copylayer",
+  ".rlc-copygroup",
+  ".rlc-copygroup-in",
+  ".rlc-textgroup",
+  ".rlc-textgroup-in",
+  ".rlc-intro",
+  ".rlc-catslider-hd",
+  ".rlc-inner-catslider-hd",
+  ".rlc-in",
+  ".rlc-copy",
+  ".rlc-copy-inner",
+  ".rlc-copylayer",
+];
+
+const COPY_CLASS_LIST = [
+  ".rlc-sub",
+  ".rlc-title",
+  ".rlc-dek",
+  ".rlc-brand",
+  ".rlc-copy",
+  ".rlc-quote",
+  ".rlc-sig",
+  ".rlc-label",
+  "h2",
+  ".rlc-headline",
+  ".rlc-intro-dek",
+];
+
 // MARK: Font family
 function generateCopyGroupInfoContainer(caid) {
-  $(`
-        ${caid} *:has(>.rlc-copygroup),
-        ${caid} *:has(>.rlc-textgroup),
-        ${caid} *:has(>.rlc-intro),
-        ${caid} *:has(>.rlc-catslider-hd)
-    `).each((i, container) => {
+  const copyContainerSelector = COPYCONTAINER_CLASS_LIST.map(
+    (className) => `${caid} *:has(>${className})`,
+  ).join(",");
+
+  const copyGroupSelector = COPYGROUP_CLASS_LIST.map(
+    (className) => `${className}`,
+  ).join(",");
+
+  const copySelector = COPY_CLASS_LIST.map((className) => `${className}`).join(
+    ",",
+  );
+
+  $(copyContainerSelector).each((i, container) => {
     let html = "";
     $(container)
-      .find(
-        ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-in, .rlc-copylayer"
-      )
+      .find(copyGroupSelector)
       .each((i, group) => {
-        if (
-          $(group).children(".rlc-info-container").length ||
-          $(group).children(".rlc-copylayer").length 
-        ) {
+        if ($(group).children(".rlc-info-container").length) {
           return;
         }
 
         $(group)
-          .children(
-            ".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand, .rlc-copy, .rlc-quote, .rlc-sig, .rlc-label, h2"
-          )
+          .children(copySelector)
           .each((i, el) => {
             if ($(el).is("a") || $(el).html().includes("rlc-info-container"))
               return;
@@ -68,12 +119,12 @@ function generateCopyGroupInfoContainer(caid) {
         if ($(container).offset().top - $(group).offset().top <= 120) {
           additionalCSS += `--_translateY: 0; bottom: unset; top: 0;`;
         }
-      
+
         if (
-          $(group).hasClass('rlc-catslider-hd') &&
-          $(group).css('display', 'flex') &&
-          $(group).css('flex-direction', 'column') &&
-          $(group).css('justify-content', 'center') 
+          $(group).hasClass("rlc-catslider-hd") &&
+          $(group).css("display", "flex") &&
+          $(group).css("flex-direction", "column") &&
+          $(group).css("justify-content", "center")
         ) {
           additionalCSS += `--_translateY: -50%; top: 50%;`;
         }
@@ -86,9 +137,9 @@ function generateCopyGroupInfoContainer(caid) {
             (blockContainer.offset().top + blockContainer.height()) <=
             50
         ) {
-          if(
-            $(group).css('flex-direction') !== 'column' &&
-            $(group).css('justify-content') !== 'center' 
+          if (
+            $(group).css("flex-direction") !== "column" &&
+            $(group).css("justify-content") !== "center"
           ) {
             additionalCSS += `--_translateY: 0; bottom: 0; top: unset;`;
           }
@@ -99,7 +150,10 @@ function generateCopyGroupInfoContainer(caid) {
         }
 
         // center ab-container if copy group almost the same width of container
-        if ($(document).width() - $(group).width() <= 10) {
+        if (
+          $(document).width() - $(group).outerWidth() <= 10 ||
+          $(group).css("margin-left") === $(group).css("margin-right")
+        ) {
           additionalCSS += `--_translateX: -50%; left: 50%;`;
         } else if (
           (getCSSInt(group, "padding-left") > 0 ||
@@ -117,7 +171,7 @@ function generateCopyGroupInfoContainer(caid) {
                 $(group).css("padding-left") !== $(group).css("padding-right")
               ) {
                 additionalCSS += `--_translateX: ${$(group).css(
-                  "padding-left"
+                  "padding-left",
                 )};`;
               }
             }
@@ -133,49 +187,34 @@ function generateCopyGroupInfoContainer(caid) {
 }
 
 function generateSingleCopyInfoContainer(caid) {
-  $(`
-      ${caid} .rlc-title:not(
-        :where(
-          .rlc-copygroup, 
-          .rlc-copygroup-in, .rlc-textgroup, 
-          .rlc-textgroup-in, .rlc-intro, 
-          .rlc-catslider-hd
-        ) > .rlc-title),
-      ${caid} h2:not(
-        :where(
-          .rlc-copygroup, 
-          .rlc-copygroup-in, .rlc-textgroup, 
-          .rlc-textgroup-in, .rlc-intro, 
-          .rlc-catslider-hd
-        ) > h2),
-      ${caid} .rlc-dek:not(
-        :where(
-          .rlc-copygroup, 
-          .rlc-copygroup-in, 
-          .rlc-textgroup, 
-          .rlc-textgroup-in, 
-          .rlc-intro, 
-          .rlc-catslider-hd
-        ) > .rlc-dek)
-    `).each((i, el) => {
+  const copyGroupClassesSelector = COPYGROUP_CLASS_LIST.map(
+    (className) => `${className}`,
+  ).join(",");
+
+  const copyClassesSelector = COPY_CLASS_LIST.map(
+    (className) => `
+    ${caid} ${className}:not(
+        :where(${copyGroupClassesSelector}) > ${className})
+    `,
+  ).join(",");
+
+  const copySelector = COPY_CLASS_LIST.map((className) => `${className}`).join(
+    ",",
+  );
+
+  $(copyClassesSelector).each((i, el) => {
     let html = "";
     const parent = $(el).parent();
-    parent
-      .children(".rlc-sub, .rlc-title, .rlc-dek, .rlc-brand")
-      .each((i, el) => {
-        if (
-          $(el).is("a") ||
-          // $(parent).html().includes("rlc-info-container")
-          $(parent).find("> .rlc-info-container").length
-        )
-          return;
+    parent.children(copySelector).each((i, el) => {
+      if ($(el).is("a") || $(parent).find("> .rlc-info-container").length)
+        return;
 
-        html += `
+      html += `
             ${$(el).text()}:<br>
             ${getFontDetails(el)}<br>
             <span class='rlc-ab-divider'></span>
           `;
-      });
+    });
 
     if (!html.trim()) return;
     addPositionToEl(parent);
@@ -187,8 +226,8 @@ function generateSingleCopyInfoContainer(caid) {
             ? "--_translateX: -50%;"
             : ""
         }"
-          `
-      )
+          `,
+      ),
     );
   });
 
@@ -198,27 +237,20 @@ function generateSingleCopyInfoContainer(caid) {
       createInfoContainer(`
           ${$(el).text()}:<br>
           ${getFontDetails(el)}<br>
-        `)
+        `),
     );
   });
 
   $(`
     ${caid} .rlc-intro:not(
-      :where(
-        .rlc-copygroup, 
-        .rlc-copygroup-in, 
-        .rlc-textgroup, 
-        .rlc-textgroup-in, 
-        .rlc-intro, 
-        .rlc-catslider-hd
-      ) > .rlc-intro)
+      :where(${copyGroupClassesSelector}) > .rlc-intro)
   `).each((i, el) => {
     if ($(el).html().includes("rlc-info-container")) return;
     $(el).append(
       createInfoContainer(`
           ${$(el).text()}:<br>
           ${getFontDetails(el)}<br>
-        `)
+        `),
     );
   });
 }
@@ -228,18 +260,22 @@ function toggleFont() {
 }
 
 function hideFont() {
-  const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner, .rlc-copylayer";
+  const groupClasses = COPYINNERGROUP_CLASS_LIST.map(
+    (className) => className,
+  ).join(",");
 
   $(`:where(${groupClasses}) > .rlc-info-container`).hide();
   $(`:where(${groupClasses}) .rlc-title ~ .rlc-info-container`).hide();
   $(`:where(${groupClasses}) .rlc-dek ~ .rlc-info-container`).hide();
-  $(
-    `*:has(>.rlc-title:not(:where(${groupClasses}) .rlc-title)) > .rlc-info-container`
-  ).hide();
-  $(
-    `*:has(>.rlc-dek:not(:where(${groupClasses}) .rlc-dek)) > .rlc-info-container`
-  ).hide();
+  $(`:where(${groupClasses}) .rlc-headline ~ .rlc-info-container`).hide();
+  $(`:where(${groupClasses}) .rlc-intro-dek ~ .rlc-info-container`).hide();
+
+  COPY_CLASS_LIST.forEach((copy) => {
+    $(
+      `*:has(>${copy}:not(:where(${groupClasses}) ${copy})) > .rlc-info-container`,
+    ).hide();
+  });
+
   $(".rlc-header > .rlc-info-container").hide();
 
   // remove overflow visible CSS override from showFont()
@@ -249,18 +285,21 @@ function hideFont() {
 }
 
 function showFont() {
-  const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner, .rlc-copylayer";
+  const groupClasses = COPYINNERGROUP_CLASS_LIST.map(
+    (className) => className,
+  ).join(",");
 
   $(`:where(${groupClasses}) > .rlc-info-container`).show();
   $(`:where(${groupClasses}) .rlc-title ~ .rlc-info-container`).show();
   $(`:where(${groupClasses}) .rlc-dek ~ .rlc-info-container`).show();
-  $(
-    `*:has(>.rlc-title:not(:where(${groupClasses}) .rlc-title)) > .rlc-info-container`
-  ).show();
-  $(
-    `*:has(>.rlc-dek:not(:where(${groupClasses}) .rlc-dek)) > .rlc-info-container`
-  ).show();
+  $(`:where(${groupClasses}) .rlc-headline ~ .rlc-info-container`).show();
+  $(`:where(${groupClasses}) .rlc-intro-dek ~ .rlc-info-container`).show();
+
+  COPY_CLASS_LIST.forEach((copy) => {
+    $(
+      `*:has(>${copy}:not(:where(${groupClasses}) ${copy})) > .rlc-info-container`,
+    ).show();
+  });
   $(".rlc-header > .rlc-info-container").show();
 
   // only update the overflow if the target isn't in slider
@@ -269,7 +308,7 @@ function showFont() {
       if ($(el).css("overflow") === "hidden") {
         $(el).css("overflow", "visible");
       }
-    }
+    },
   );
   isShowingFont = true;
 }

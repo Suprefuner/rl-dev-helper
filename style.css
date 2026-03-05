@@ -102,6 +102,7 @@ li.rlc-dev-item {
   height: max-content;
   max-height: 70vh;
   overflow-y: scroll;
+  margin-top: 0 !important;
   padding: 10px;
 
   position: absolute;
