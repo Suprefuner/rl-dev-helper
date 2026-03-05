@@ -9,10 +9,13 @@ function generateCopyGroupInfoContainer(caid) {
     let html = "";
     $(container)
       .find(
-        ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-in"
+        ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-in, .rlc-copylayer"
       )
       .each((i, group) => {
-        if ($(group).children(".rlc-info-container").length) {
+        if (
+          $(group).children(".rlc-info-container").length ||
+          $(group).children(".rlc-copylayer").length 
+        ) {
           return;
         }
 
@@ -226,7 +229,7 @@ function toggleFont() {
 
 function hideFont() {
   const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner";
+    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner, .rlc-copylayer";
 
   $(`:where(${groupClasses}) > .rlc-info-container`).hide();
   $(`:where(${groupClasses}) .rlc-title ~ .rlc-info-container`).hide();
@@ -247,7 +250,7 @@ function hideFont() {
 
 function showFont() {
   const groupClasses =
-    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner";
+    ".rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-intro, .rlc-catslider-hd, .rlc-inner-catslider-hd, .rlc-copy, .rlc-copy-inner, .rlc-copylayer";
 
   $(`:where(${groupClasses}) > .rlc-info-container`).show();
   $(`:where(${groupClasses}) .rlc-title ~ .rlc-info-container`).show();
