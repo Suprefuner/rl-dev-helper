@@ -498,6 +498,8 @@ function checkIfImageLinkSameAsCTA() {
     const imageLink = $(hotspotEl).attr("href");
     const CTALink = $(lineCTA).attr("href");
 
+    if(imageLink.includes('dwvar') || CTALink.includes('dwvar')) return
+
     if (imageLink !== CTALink) {
       $(hotspotEl).find(".rlc-info-container .rlc-p").html(`
         <span class='rlc-dev-err'>

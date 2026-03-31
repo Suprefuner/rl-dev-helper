@@ -180,6 +180,8 @@ function enableDevItem(devItem) {
 }
 
 function positionHandler($qsBtn, device) {
+  if(!$qsBtn || !$qsBtn.dataset.position) return
+
   let qsBtnPosition = $qsBtn.dataset.position.replaceAll(' ', '')
   // to prevent CA code has empty top or left position value
   if(qsBtnPosition.includes("'left':}")) {

@@ -56,7 +56,7 @@ function checkMissingImage(caid) {
         const imgUrl =
           img.attr("src") !== undefined ? img.attr("src") : img[0].currentSrc;
 
-        if (imgUrl) {
+        if (imgUrl && !missingImages.filter(img=>img.imgUrl===imgUrl).length) {
           missingImages.push({
             imgUrl: imgUrl,
             id: missingID,

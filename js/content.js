@@ -112,6 +112,16 @@ function bindEvent() {
       copy(copyContent, $(this));
     }
   );
+  
+  $(document).on(
+    "click",
+    '.rlc-dev-video-container',
+    async function (e) {
+      e.preventDefault();
+      const copyContent = $(this).attr("data-video");
+      copy(copyContent, $(this).find('.rlc-dev-icon[data-action="copy"]'));
+    }
+  );
 
   // missing image button
   $(document).on("click.rlcDevHelper", ".rlc-dev-missing-image", function () {

@@ -8,6 +8,7 @@
 .rlc-dev-helper {
   --_offset: 20px;
   --_btn-size: 80px;
+  --_qa-status-clr: rgb(78, 235, 78);
   position: fixed;
   left: var(--_offset);
   bottom: var(--_offset);
@@ -23,7 +24,7 @@ button.rlc-btn--dev {
   background-color: white !important;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 
 button.rlc-btn--dev .rlc-image {
@@ -34,8 +35,27 @@ button.rlc-btn--dev .rlc-image {
 
 .rlc-dev-helper[data-status="on"] button.rlc-btn--dev,
 button.rlc-btn--dev:hover {
-  box-shadow: 0 0 0 5px var(--_rlc-dev-navy);
+  box-shadow: 0 0 0 2px var(--_rlc-dev-navy);
   background-color: white !important;
+}
+
+.rlc-dev-helper::before{
+  content: "";
+  --_size: 10px;
+  width: var(--_size);
+  height: var(--_size);
+  border: 1px solid var(--_rlc-dev-navy);
+  background-color: var(--_qa-status-clr);
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  border-radius: 50%;
+}
+
+html:has(.rlc-creative_v3 .rlc-dev-err) .rlc-dev-helper{
+  --_qa-status-clr: red;
 }
 
 ul.rlc-dev-menu {
@@ -164,6 +184,10 @@ body:has(.rlc-info-container:hover) .rlc-info-container:not(:hover){
 
 *:has(> .rlc-info-container:hover) {
   z-index: 999;
+}
+
+article:has(.rlc-info-container:hover) {
+  overflow: unset !important;
 }
 
 .rlc-info-container[data-links='many']{
@@ -499,6 +523,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 99;
   transform: translate(-50%, -50%);
 
   padding: 10px 14px;
@@ -516,6 +541,7 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
   overflow-wrap: break-word;
 
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 .rlc-dev-video-container:hover {
@@ -602,10 +628,12 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 .rlc-dev-missing-image-container {
   position: relative;
   width: 400px;
+
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 999;
+
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
@@ -655,8 +683,12 @@ li.variations-attribute:nth-child(even) .rlc-dev-color-container {
 
 .rlc-dev-missing-images {
   list-style: none;
-  padding-left: 0;
+
+  max-height: 80vh;
   margin-top: 16px;
+  padding-left: 0;
+  padding-right: 8px;
+  overflow-y: scroll;
 }
 
 .rlc-dev-missing-image {
@@ -790,6 +822,7 @@ body:has(.rlc-dev-item.rlc-dev-item--id[data-state='on']) .notinstock:has(.rlc-i
 
 body:has(.rlc-dev-item.rlc-dev-item--id[data-state='on']) .instock .rlc-hotspot{
   outline: 3px solid green;
+  outline-offset: -10px;
   border-radius: 10px;
 }
 
