@@ -33,3 +33,13 @@ Built-in Hotkeys
 | 5 | Toggle product color inspector |
 | 6 | Toggle missing image inspector |
 | 7 | Toggle PLP slot CA inspector |
+
+### Update Log
+#### [4/5/2026]
+- **Feature**: Added **Product Preview** functionality.
+Hover the product slice to preview. 
+![Load unpacked button position](./assets/images/screencap/product-preview.png)
+- **Logic Update**: 
+  - Enhanced error checking to distinguish between all kinds of ID(CGID/PID) errors and PID-only errors.
+  - **UI Change**: Displays a 🟡 instead of a 🔴 if only PID errors are detected.
+![Load unpacked button position](./assets/images/screencap/pid-only-err.png)
