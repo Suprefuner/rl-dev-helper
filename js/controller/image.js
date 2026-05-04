@@ -24,6 +24,7 @@ function generateImageInfo(caid) {
         ${imageSource.desktop ? "Desktop: " + imageSource.desktop + "<br>" : ""}
         ${imageSource.mobile ? "Mobile: " + imageSource.mobile + "<br>" : ""}
         ${imageSource.all ? "All: " + imageSource.all + "<br>" : ""}
+        OG Size: ${$(img)[0].naturalWidth}(w) x ${$(img)[0].naturalHeight}(h) <br>
         Size: ${$(img).width()}(w) x ${$(img).height()}(h) <br>
         Alt: ${$(img).attr("alt") || "[missing]"} 
       </div>

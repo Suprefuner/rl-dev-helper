@@ -23,6 +23,7 @@ function generateDevItems(list) {
   list.forEach((item, i) => {
     const status = item?.status === "show";
     let hasError = false;
+    let onlyPIDError = false;
 
     if (item?.checkError) {
       const list = checkHasError(item.checkError).list;
@@ -30,10 +31,20 @@ function generateDevItems(list) {
 
       if (hasError) {
         const listNotUnderFlyout = [...list].filter(
-          (el) => !$(el).closest(".rlc-flyout").length
+          (el) => !$(el).closest(".rlc-flyout").length,
         );
 
         hasError = !!listNotUnderFlyout.length;
+
+        if (item.name === "CGID/PID") {
+          const pidList = [...list].filter(
+            (item) => !!$(item).find(".rlc-dev-err"),
+          );
+
+          if (list.length === pidList.length) {
+            onlyPIDError = true;
+          }
+        }
       }
     }
 
@@ -45,7 +56,8 @@ function generateDevItems(list) {
         data-state="${status ? "on" : "off"}"
       >
           ${" " + item.name}
-          ${hasError ? "🔴" : ""}
+          ${hasError && !onlyPIDError ? "🔴" : ""}
+          ${hasError && onlyPIDError ? "🟡" : ""}
       </li>
     `;
   });
@@ -103,4 +115,3 @@ function updateDevItemStatus(el) {
   const isShow = $(el).attr("data-status") === "show";
   $(el).attr("data-status", isShow ? "hide" : "show");
 }
-

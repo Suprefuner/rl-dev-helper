@@ -25,10 +25,12 @@ chrome.action.onClicked.addListener((tab) => {
 
   chrome.storage.local.get(["isActive"], (result) => {
     const isActive = !result.isActive;
-    console.log({isActive})
+    console.log({ isActive });
     chrome.storage.local.set({ isActive }, () => {
       chrome.action.setIcon({
-        path: isActive ? "../assets/images/logo/active_logo.png" : "../assets/images/logo/inactive_logo.png",
+        path: isActive
+          ? "../assets/images/logo/active_logo.png"
+          : "../assets/images/logo/inactive_logo.png",
         tabId: tab.id,
       });
 
@@ -59,9 +61,20 @@ chrome.action.onClicked.addListener((tab) => {
               },
               () => {
                 isProcessing = false;
-              }
+              },
             );
-          }
+
+            chrome.scripting.executeScript(
+              {
+                target: { tabId: tab.id },
+                files: ["js/controller/prod-preview.js"],
+                world: "ISOLATED",
+              },
+              () => {
+                isProcessing = false;
+              },
+            );
+          },
         );
       } else {
         chrome.scripting.removeCSS(
@@ -88,11 +101,11 @@ chrome.action.onClicked.addListener((tab) => {
                   },
                   () => {
                     isProcessing = false;
-                  }
+                  },
                 );
-              }
+              },
             );
-          }
+          },
         );
       }
     });
@@ -131,10 +144,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                 },
                 world: "MAIN",
               });
-            }
+            },
           );
-        }
+        },
       );
     });
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "fetchPreview") {
+    fetch(request.url)
+      .then((response) => response.text())
+      .then((html) => {
+        sendResponse({ success: true, html: html });
+      })
+      .catch((error) => {
+        sendResponse({ success: false, error: error.message });
+      });
+    return true;
   }
 });

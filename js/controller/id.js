@@ -399,7 +399,7 @@ function getLinkID(el) {
 
   if (urlPart.includes("??")) {
     return `
-      <span class="rlc-dev-err">Multiple ?, please remove</span>
+      <span class="rlc-dev-err" data-type='cgid'>Multiple ?, please remove</span>
     `;
   }
 
@@ -413,7 +413,7 @@ function getLinkID(el) {
     const searchQuery = urlPart.split("search")[1];
     if (searchQuery === "" || searchQuery) {
       cgid = `
-        <span class='rlc-dev-err'>
+        <span class='rlc-dev-err' data-type='cgid'>
           ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"} 
           ${
             searchQuery !== "" ? urlPart?.split("search?")[1].split("&")[0] : ""
@@ -425,7 +425,7 @@ function getLinkID(el) {
 
   if (urlPart?.includes("ab=")) {
     cgid = `
-      <span class='rlc-dev-err'>
+      <span class='rlc-dev-err' data-type='ab-tag'>
         contains ab tagging: <br>
         ab=${urlPart.split("ab=")[1].split("&")[0]}
       </span> <br>
@@ -436,7 +436,7 @@ function getLinkID(el) {
   // PID handling
   if (!!$(el).closest(".notfound").length) {
     return `
-      <span class="rlc-dev-err">Invalid PID</span>
+      <span class="rlc-dev-err" data-type='pid'>Invalid PID</span>
     `;
   }
 
@@ -456,7 +456,7 @@ function getLinkID(el) {
     }
     cgid = cgid.includes("contains ab tagging")
       ? `
-      <span class='rlc-dev-err'>
+      <span class='rlc-dev-err' data-type='ab-tag'>
         contains ab tagging: <br>
         ab=${urlPart.split("ab=")[1].split("&")[0]}
       </span> 
@@ -474,9 +474,9 @@ function getLinkID(el) {
     ${cgid ? cgid + "<br>" : ""}
     ${pid ? "◻️ PID: " + pid : ""}
     ${
-      pid && outOfStock ? '<span class="rlc-dev-err">(Out of stock)</span>' : ""
+      pid && outOfStock ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>' : ""
     }
-    ${pid && comingSoon ? '<span class="rlc-dev-err">(Coming soon)</span>' : ""}
+    ${pid && comingSoon ? '<span class="rlc-dev-err" data-type="pid">(Coming soon)</span>' : ""}
     ${pid ? "<br>" : ""}
     ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
     ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
@@ -502,7 +502,7 @@ function checkIfImageLinkSameAsCTA() {
 
     if (imageLink !== CTALink) {
       $(hotspotEl).find(".rlc-info-container .rlc-p").html(`
-        <span class='rlc-dev-err'>
+        <span class='rlc-dev-err' data-type='cgid'>
           image link doesn't match CTA:<br>
           image link: ${imageLink} <br>
           CTA: ${CTALink}

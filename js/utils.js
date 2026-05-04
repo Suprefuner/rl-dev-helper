@@ -74,7 +74,7 @@ function getFontDetails(el) {
   }
 
   if (!isCorrectFontFamily) {
-    fontFamily = `<span class='rlc-dev-err'>${fontFamily}</span>`;
+    fontFamily = `<span class='rlc-dev-err' data-type='font'>${fontFamily}</span>`;
   }
 
   return `

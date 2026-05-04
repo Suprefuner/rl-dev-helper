@@ -26,10 +26,10 @@ Built-in Hotkeys
 | Key | Function |
 |-----|----------|
 | ` | Toggle Dev Helper menu |
-| 1 | Trigger CGID/PID inspector |
-| 2 | Trigger font inspector |
-| 3 | Trigger image information inspector |
-| 4 | Trigger video inspector |
-| 5 | Trigger product color inspector |
-| 6 | Trigger missing image inspector |
-| 7 | Trigger PLP slot CA inspector |
+| 1 | Toggle CGID/PID inspector |
+| 2 | Toggle font inspector |
+| 3 | Toggle image information inspector |
+| 4 | Toggle video inspector |
+| 5 | Toggle product color inspector |
+| 6 | Toggle missing image inspector |
+| 7 | Toggle PLP slot CA inspector |

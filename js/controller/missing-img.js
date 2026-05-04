@@ -47,6 +47,11 @@ function checkMissingImage(caid) {
     $(`${caid} img`).each(function (i) {
       const img = $(this);
       if (img[0].naturalWidth === 0) {
+
+        const isDesktop = $(window).width() >= 768
+        if(isDesktop && img[0].currentSrc.includes('_m_c')) return
+        if(!isDesktop && !img[0].currentSrc.includes('_m_c')) return
+
         let parentEl = img.closest(".rlc-block");
         if (parentEl.hasClass("rlc-slide")) {
           parentEl = parentEl.parent();

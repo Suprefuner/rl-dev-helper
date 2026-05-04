@@ -47,6 +47,7 @@ const COPY_CLASS_LIST = [
   "h2",
   ".rlc-headline",
   ".rlc-intro-dek",
+  ".rlc-subtitle",
 ];
 
 // MARK: Font family
@@ -218,17 +219,21 @@ function generateSingleCopyInfoContainer(caid) {
 
     if (!html.trim()) return;
     addPositionToEl(parent);
-    $(parent).append(
-      createInfoContainer(
-        html,
-        `style="top: 0; ${
-          parseInt($(document).width()) - parseInt($(parent).outerWidth()) < 10
+    if(!$(el).hasClass('rlc-subtitle')) {
+      $(parent).append(
+        createInfoContainer(
+          html,
+          `style="top: 0; ${
+            parseInt($(document).width()) - parseInt($(parent).outerWidth()) < 10
             ? "--_translateX: -50%;"
             : ""
-        }"
-          `,
-      ),
-    );
+            }"
+            `,
+          ),
+        );
+      } else {
+        $(el).append(createInfoContainer(html));
+      }
   });
 
   $(".rlc-header").each((i, el) => {
@@ -277,6 +282,7 @@ function hideFont() {
   });
 
   $(".rlc-header > .rlc-info-container").hide();
+  $(".rlc-subtitle > .rlc-info-container").hide();
 
   // remove overflow visible CSS override from showFont()
   $(".rlc-block:has(.rlc-info-container)").removeAttr("style");
@@ -301,6 +307,7 @@ function showFont() {
     ).show();
   });
   $(".rlc-header > .rlc-info-container").show();
+  $(".rlc-subtitle > .rlc-info-container").show();
 
   // only update the overflow if the target isn't in slider
   $(".rlc-block:not(:has(.rlc-slide)):has(.rlc-info-container)").each(
