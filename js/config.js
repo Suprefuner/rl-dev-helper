@@ -2,6 +2,7 @@ if (!window._rlcDevHelper) {
   window._rlcDevHelper = true;
 
   window.isPLP = !!$(".plp-content-slot").length;
+  window.isCompiler = window.location.href.includes('localhost:4000')
 
   window.caid = window.isPLP
     ? ":where(.plp-content-slot, .ingrid)"

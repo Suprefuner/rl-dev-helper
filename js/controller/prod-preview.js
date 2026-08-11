@@ -1,5 +1,5 @@
 let previewPopup = document.getElementById("rlc-dev-prod-preview-popup");
-let lastestImgUrl = ""
+let lastestImgUrl = "";
 
 if (!previewPopup) {
   previewPopup = document.createElement("div");
@@ -10,40 +10,68 @@ if (!previewPopup) {
 
     <div class="rlc-product-container">
       <div class="rlc-dev-prod-no"></div>
+      <div class="rlc-dev-prod-color"></div>
       <div class="rlc-dev-prod-color-container"></div>
       <img src="" alt="" class="rlc-product-image">
     </div>
-  `
+  `;
   document.body.appendChild(previewPopup);
 }
 
+let currentAbortSignalId = null;
+
 document.addEventListener("mouseover", (e) => {
+  const isInContentAsset = e.target.closest(".content-asset");
+  if (!isInContentAsset) {
+    hidePreviewPopup();
+    return;
+  }
+
   const link = e.target.closest("a");
-  if (
-    !link || 
-    (!link.href.includes("dwvar") && !/\d{4,}\.html/.test(link))
-    ) {
+
+  if (!link || (!link.href.includes("dwvar") && !/\d{4,}\.html/.test(link))) {
     if (previewPopup.style.display === "block") {
-      hidePreviewPopup()
+      hidePreviewPopup();
     }
     return;
   }
 
+  if(link && !link.href.includes("dwvar")) {
+    if (previewPopup.style.display === "block") {
+      hidePreviewPopup();
+    }
+    return
+  }
+
+  if(link.closest('.notinstock') || link.closest('.notorderable')) {
+    updatePreviewPopupMsg("Not available")
+    return;
+  }
+
+  const newSignalId = Date.now().toString();
+  currentAbortSignalId = newSignalId;
+
   previewPopup.style.left = `${e.clientX}px`;
   previewPopup.style.top = `${e.pageY + 15}px`;
 
-  if(link.href !== lastestImgUrl) {
-    previewPopup.querySelector('img').src = ""
-    updatePreviewPopupMsg("Loading...")
-    lastestImgUrl = link.href
+  if (link.href !== lastestImgUrl) {
+    previewPopup.querySelector("img").src = "";
+    updatePreviewPopupMsg("Loading...");
+    lastestImgUrl = link.href;
   }
 
   previewPopup.style.display = "block";
-  const prodNo = link.href.split('.html')[0].split('-').at(-1)
+  const prodNo = link.href.split(".html")[0].split("-").at(-1);
 
   chrome.runtime.sendMessage(
-    { action: "fetchPreview", url: link.href },
+    {
+      action: "fetchPreview",
+      url: link.href,
+      signalId: newSignalId,
+    },
     (response) => {
+      if (currentAbortSignalId !== newSignalId) return
+
       if (response && response.success) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(response.html, "text/html");
@@ -53,14 +81,15 @@ document.addEventListener("mouseover", (e) => {
         );
         let imgUrl = img?.getAttribute("data-img");
 
-         const prodColors = doc.querySelector('.js-attribute-wrapper.colorname');
-        const prodClrContainer = previewPopup.querySelector('.rlc-dev-prod-color-container');
+        const prodColors = doc.querySelector(".js-attribute-wrapper.colorname");
+        const selectedProdColor = doc.querySelector(".selected .js-variation-link").getAttribute('data-selected')
+        const prodClrsContainer = previewPopup.querySelector(".rlc-dev-prod-color-container");
 
-        if (prodColors && prodClrContainer) {
-            const clonedElement = document.importNode(prodColors, true);
-            
-            prodClrContainer.innerHTML = ''; 
-            prodClrContainer.appendChild(clonedElement);
+        if (prodColors && prodClrsContainer) {
+          const clonedElement = document.importNode(prodColors, true);
+
+          prodClrsContainer.innerHTML = "";
+          prodClrsContainer.appendChild(clonedElement);
         }
 
         if (imgUrl) {
@@ -68,13 +97,14 @@ document.addEventListener("mouseover", (e) => {
             const origin = new URL(url).origin;
             imgUrl = origin + imgUrl;
           }
-          previewPopup.querySelector('.rlc-product-image').src = imgUrl
-          previewPopup.querySelector('.rlc-dev-prod-no').innerHTML = prodNo
+          previewPopup.querySelector(".rlc-product-image").src = imgUrl;
+          previewPopup.querySelector(".rlc-dev-prod-no").innerHTML = `PID: ${prodNo}`;
+          previewPopup.querySelector(".rlc-dev-prod-color").innerHTML = `Color: ${selectedProdColor}`;
         } else {
-          updatePreviewPopupMsg("No image found") 
+          updatePreviewPopupMsg("No image found");
         }
       } else {
-        updatePreviewPopupMsg("Failed to load")
+        updatePreviewPopupMsg("Failed to load");
       }
     },
   );
@@ -105,11 +135,11 @@ document.addEventListener("mouseleave", (e) => {
   }
 });
 
-function updatePreviewPopupMsg(msg){
-  previewPopup.querySelector('.rlc-preview-popup-msg').innerHTML = msg;
+function updatePreviewPopupMsg(msg) {
+  previewPopup.querySelector(".rlc-preview-popup-msg").innerHTML = msg;
 }
 
 function hidePreviewPopup() {
   previewPopup.style.display = "none";
-  previewPopup.querySelector('.rlc-product-image').src = ""
+  previewPopup.querySelector(".rlc-product-image").src = "";
 }

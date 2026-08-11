@@ -860,6 +860,34 @@ body:has(.rlc-dev-item.rlc-dev-item--id[data-state="on"])
   overflow: visible;
 }
 
+body:has(.rlc-dev-item.rlc-dev-item--id[data-state="on"])
+  .notinstock
+  .not-quick-shoppable {
+  --_size: 50px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(2.5 * var(--_size));
+  height: var(--_size);
+
+  border: 1px solid red;
+  background-color: var(--_rlc-dev-black-bg);
+  border-radius: 10px;
+}
+
+body:has(.rlc-dev-item.rlc-dev-item--id[data-state="on"])
+  .notinstock
+  .not-quick-shoppable::before {
+  content: "not in stock";
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 [id*="hero"] .rlc-dev-image-name-container,
 [id$="-plp"]:first-of-type .rlc-dev-image-name-container {
   top: calc(var(--_offset) + 80px);
@@ -937,7 +965,8 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state="on"]) .rlc-copygroup {
   display: none;
 }
 
-#rlc-dev-prod-preview-popup .rlc-dev-prod-no {
+#rlc-dev-prod-preview-popup .rlc-dev-prod-no,
+#rlc-dev-prod-preview-popup .rlc-dev-prod-color {
   font-size: 16px;
 }
 
@@ -958,7 +987,7 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state="on"]) .rlc-copygroup {
   display: none;
 }
 
-.rlc-dev-prod-color-container ul, 
+.rlc-dev-prod-color-container ul,
 .rlc-dev-prod-color-container li {
   list-style: none;
   padding-left: 0;
@@ -976,13 +1005,17 @@ body:has(.rlc-dev-item.rlc-dev-item--font[data-state="on"]) .rlc-copygroup {
   height: var(--_size);
 }
 
-.rlc-dev-prod-color-container .js-attributes-list .variations-attribute.selected {
+.rlc-dev-prod-color-container
+  .js-attributes-list
+  .variations-attribute.selected {
   outline: 1px solid;
   outline-offset: 1px;
 }
 
-.rlc-dev-prod-color-container .js-attributes-list .variations-attribute:not(.selected) {
-  opacity: .75;
+.rlc-dev-prod-color-container
+  .js-attributes-list
+  .variations-attribute:not(.selected) {
+  opacity: 0.75;
 }
 
 .rlc-dev-prod-color-container .js-attributes-list .variations-attribute img {

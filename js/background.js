@@ -6,6 +6,8 @@ const whitelist = [
   "https://www.ralphlauren.com*",
   "https://www.ralphlauren.co.jp*",
   "https://www.ralphlauren.co.kr*",
+  "https://www.ralphlauren.co.kr*",
+  "http://localhost:4000/ticket*"
 ];
 
 function isValidUrl(url, list) {

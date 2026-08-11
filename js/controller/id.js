@@ -16,7 +16,7 @@ function generateHotspotInfoContainer() {
     additionalCSS += `--_max-width: min(${
       $(el)
         .closest(
-          ":where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-product-tile, .rlc-50-50__block, .rlc-block)"
+          ":where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-product-tile, .rlc-50-50__block, .rlc-block)",
         )
         .width() - 60
     }px, 500px);`;
@@ -60,7 +60,7 @@ function generateHotspotInfoContainer() {
     additionalCSS += `--_max-width: min(${
       $(el)
         .closest(
-          ":where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-product-tile, .rlc-50-50__block, .rlc-block)"
+          ":where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in, .rlc-product-tile, .rlc-50-50__block, .rlc-block)",
         )
         .width() - 60
     }px, 500px);`;
@@ -102,7 +102,7 @@ function generateBGLinkInfoContainer() {
         "--_max-width",
         `${
           slideParent.width() - getCSSInt(slideParent, "padding-right") - 40
-        }px`
+        }px`,
       );
     }
     additionalCSS = '"';
@@ -112,7 +112,7 @@ function generateBGLinkInfoContainer() {
 
 function generateCTAInfoContainer() {
   $(
-    ".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta, #quickfilter-wrapper ul .filters-item, #rlc-stickynavbuttons .rlc-li, .plp-info-breadcrumb-path"
+    ".rlc-copygroup, .rlc-textgroup, .rlc-links, .rlc-back-arrow-group, .rlc-ul, .rlc-back-cta, #quickfilter-wrapper ul .filters-item, #rlc-stickynavbuttons .rlc-li, .plp-info-breadcrumb-path",
   ).each((i, linksContainer) => {
     if (checkInfoContainerExist(linksContainer)) return;
 
@@ -161,7 +161,7 @@ function generateCTAInfoContainer() {
 
     $(linksContainer)
       .children(
-        ".rlc-pillbutton, .rlc-linecta, .rlc-target, .rlc-link, .filters-item-link, .rlc-link, a"
+        ".rlc-pillbutton, .rlc-linecta, .rlc-target, .rlc-link, .filters-item-link, .rlc-link, a",
       )
       .each((j, el) => {
         if (shouldIgnoreLink(el)) return;
@@ -193,19 +193,19 @@ function generateCTAInfoContainer() {
 
         if (
           $(el).closest(
-            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-left"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-left"]'
+            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-left"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-left"]',
           ).length
         ) {
           adContainerCSS += "left: 0; --_translateX: 0;";
         } else if (
           $(el).closest(
-            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-right"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-right"]'
+            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-right"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-right"]',
           ).length
         ) {
           adContainerCSS += "right: 0; --_translateX: 0;";
         } else if (
           $(el).closest(
-            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-center"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-center"]'
+            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="bottom-center"], :where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="top-center"]',
           ).length
         ) {
           adContainerCSS += "left: 50%; --_translateX: -50%;";
@@ -230,7 +230,7 @@ function generateCTAInfoContainer() {
 
         if (
           $(el).closest(
-            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="pos-top"]'
+            ':where(.rlc-copygroup, .rlc-copygroup-in, .rlc-textgroup, .rlc-textgroup-in)[class*="pos-top"]',
           ).length
         ) {
           adContainerCSS += "top: 100%; --_translateY: 12px;";
@@ -311,18 +311,18 @@ function generateQuickShopInfoContainer() {
 
     if (parentEl) {
       const leftOffset = Math.abs(
-        $(el).offset().left - $(parentEl).offset().left
+        $(el).offset().left - $(parentEl).offset().left,
       );
       const rightOffset = Math.abs(
         $(el).offset().left +
           $(el).width() -
-          ($(parentEl).offset().left + $(parentEl).width())
+          ($(parentEl).offset().left + $(parentEl).width()),
       );
       const topOffset = Math.abs($(el).offset().top - $(parentEl).offset().top);
       const bottomOffset = Math.abs(
         $(el).offset().top +
           $(el).height() -
-          ($(parentEl).offset().top + $(parentEl).height())
+          ($(parentEl).offset().top + $(parentEl).height()),
       );
 
       if (leftOffset > rightOffset) {
@@ -390,29 +390,30 @@ function getLinkID(el) {
     `;
   }
 
-  const urlPart = el.href.includes(".co.")
-    ? decodeURIComponent(el.href.split(".co")[1])
-    : decodeURIComponent(el.href.split(".com")[1]);
+  if (!window.isCompiler) {
+    const urlPart = el.href.includes(".co.")
+      ? decodeURIComponent(el.href.split(".co")[1])
+      : decodeURIComponent(el.href.split(".com")[1]);
 
-  let cgid = null;
-  let tagging = null;
+    let cgid = null;
+    let tagging = null;
 
-  if (urlPart.includes("??")) {
-    return `
+    if (urlPart.includes("??")) {
+      return `
       <span class="rlc-dev-err" data-type='cgid'>Multiple ?, please remove</span>
     `;
-  }
+    }
 
-  if (urlPart.includes("?")) {
-    [cgid, tagging] = urlPart?.split("?");
-  } else {
-    cgid = urlPart;
-  }
+    if (urlPart.includes("?")) {
+      [cgid, tagging] = urlPart?.split("?");
+    } else {
+      cgid = urlPart;
+    }
 
-  if (urlPart?.includes("search")) {
-    const searchQuery = urlPart.split("search")[1];
-    if (searchQuery === "" || searchQuery) {
-      cgid = `
+    if (urlPart?.includes("search")) {
+      const searchQuery = urlPart.split("search")[1];
+      if (searchQuery === "" || searchQuery) {
+        cgid = `
         <span class='rlc-dev-err' data-type='cgid'>
           ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"} 
           ${
@@ -420,75 +421,173 @@ function getLinkID(el) {
           }
         </span>
       `;
+      }
     }
-  }
 
-  if (urlPart?.includes("ab=")) {
-    cgid = `
+    if (urlPart?.includes("ab=")) {
+      cgid = `
       <span class='rlc-dev-err' data-type='ab-tag'>
         contains ab tagging: <br>
         ab=${urlPart.split("ab=")[1].split("&")[0]}
       </span> <br>
       ${cgid}
     `;
-  }
+    }
 
-  // PID handling
-  if (!!$(el).closest(".notfound").length) {
-    return `
+    // PID handling
+    if (!!$(el).closest(".notfound").length) {
+      return `
       <span class="rlc-dev-err" data-type='pid'>Invalid PID</span>
     `;
-  }
-
-  let pid = null;
-  let productColor = null;
-
-  if (urlPart?.includes(".html")) {
-    if (urlPart?.includes("?")) {
-      const productInfo = urlPart.split(".html")[1];
-      pid = productInfo.split("_")[0]?.replace("?dwvar", "");
-      productColor = productInfo.split("_")[1]?.replace("colorname=", "");
-      if (productColor.includes("ab=")) {
-        productColor = productColor.split("?ab=")[0];
-      }
-    } else {
-      pid = urlPart.split("-").at(-1).replace(".html", "");
     }
-    cgid = cgid.includes("contains ab tagging")
-      ? `
+
+    let pid = null;
+    let productColor = null;
+
+    if (urlPart?.includes(".html")) {
+      if (urlPart?.includes("?")) {
+        const productInfo = urlPart.split(".html")[1];
+        pid = productInfo.split("_")[0]?.replace("?dwvar", "");
+        productColor = productInfo.split("_")[1]?.replace("colorname=", "");
+        if (productColor.includes("ab=")) {
+          productColor = productColor.split("?ab=")[0];
+        }
+      } else {
+        pid = urlPart.split("-").at(-1).replace(".html", "");
+      }
+      cgid = cgid.includes("contains ab tagging")
+        ? `
       <span class='rlc-dev-err' data-type='ab-tag'>
         contains ab tagging: <br>
         ab=${urlPart.split("ab=")[1].split("&")[0]}
       </span> 
     `
-      : null;
-  }
-  const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
-  const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
-  const filterValue = filter ? filter.split("&")[1].split("=")[1] : null;
+        : null;
+    }
+    const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
+    const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
+    const filterValue = filter ? filter.split("&")[1].split("=")[1] : null;
 
-  const outOfStock = !!$(el).closest(".notinstock").length;
-  const comingSoon = !!$(el).find(".rlc-cs").length;
+    const outOfStock = !!$(el).closest(".notinstock").length;
+    const comingSoon = !!$(el).find(".rlc-cs").length;
 
-  return `
+    return `
     ${cgid ? cgid + "<br>" : ""}
     ${pid ? "◻️ PID: " + pid : ""}
     ${
-      pid && outOfStock ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>' : ""
+      pid && outOfStock
+        ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>'
+        : ""
     }
     ${pid && comingSoon ? '<span class="rlc-dev-err" data-type="pid">(Coming soon)</span>' : ""}
     ${pid ? "<br>" : ""}
     ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
     ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
   `;
+  } else {
+    console.log(el.href.split('/$')[1])
+  //   const urlPart = el.href.includes(".co.")
+  //     ? decodeURIComponent(el.href.split(".co")[1])
+  //     : decodeURIComponent(el.href.split(".com")[1]);
+
+  //   let cgid = null;
+  //   let tagging = null;
+
+  //   if (urlPart.includes("??")) {
+  //     return `
+  //     <span class="rlc-dev-err" data-type='cgid'>Multiple ?, please remove</span>
+  //   `;
+  //   }
+
+  //   if (urlPart.includes("?")) {
+  //     [cgid, tagging] = urlPart?.split("?");
+  //   } else {
+  //     cgid = urlPart;
+  //   }
+
+  //   if (urlPart?.includes("search")) {
+  //     const searchQuery = urlPart.split("search")[1];
+  //     if (searchQuery === "" || searchQuery) {
+  //       cgid = `
+  //       <span class='rlc-dev-err' data-type='cgid'>
+  //         ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"} 
+  //         ${
+  //           searchQuery !== "" ? urlPart?.split("search?")[1].split("&")[0] : ""
+  //         }
+  //       </span>
+  //     `;
+  //     }
+  //   }
+
+  //   if (urlPart?.includes("ab=")) {
+  //     cgid = `
+  //     <span class='rlc-dev-err' data-type='ab-tag'>
+  //       contains ab tagging: <br>
+  //       ab=${urlPart.split("ab=")[1].split("&")[0]}
+  //     </span> <br>
+  //     ${cgid}
+  //   `;
+  //   }
+
+  //   // PID handling
+  //   if (!!$(el).closest(".notfound").length) {
+  //     return `
+  //     <span class="rlc-dev-err" data-type='pid'>Invalid PID</span>
+  //   `;
+  //   }
+
+  //   let pid = null;
+  //   let productColor = null;
+
+  //   if (urlPart?.includes(".html")) {
+  //     if (urlPart?.includes("?")) {
+  //       const productInfo = urlPart.split(".html")[1];
+  //       pid = productInfo.split("_")[0]?.replace("?dwvar", "");
+  //       productColor = productInfo.split("_")[1]?.replace("colorname=", "");
+  //       if (productColor.includes("ab=")) {
+  //         productColor = productColor.split("?ab=")[0];
+  //       }
+  //     } else {
+  //       pid = urlPart.split("-").at(-1).replace(".html", "");
+  //     }
+  //     cgid = cgid.includes("contains ab tagging")
+  //       ? `
+  //     <span class='rlc-dev-err' data-type='ab-tag'>
+  //       contains ab tagging: <br>
+  //       ab=${urlPart.split("ab=")[1].split("&")[0]}
+  //     </span> 
+  //   `
+  //       : null;
+  //   }
+  //   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
+  //   const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
+  //   const filterValue = filter ? filter.split("&")[1].split("=")[1] : null;
+
+  //   const outOfStock = !!$(el).closest(".notinstock").length;
+  //   const comingSoon = !!$(el).find(".rlc-cs").length;
+
+  //   return `
+  //   ${cgid ? cgid + "<br>" : ""}
+  //   ${pid ? "◻️ PID: " + pid : ""}
+  //   ${
+  //     pid && outOfStock
+  //       ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>'
+  //       : ""
+  //   }
+  //   ${pid && comingSoon ? '<span class="rlc-dev-err" data-type="pid">(Coming soon)</span>' : ""}
+  //   ${pid ? "<br>" : ""}
+  //   ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
+  //   ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
+  // `;
+  }
 }
 
 function checkIfImageLinkSameAsCTA() {
   const hotspotEls = $(
-    `${window.caid} .rlc-hotspot, ${window.caid} .rlc-bg_link`
+    `${window.caid} .rlc-hotspot, ${window.caid} .rlc-bg_link`,
   );
   hotspotEls.each((i, hotspotEl) => {
-    const containerEl = $(hotspotEl).closest(".rlc-slide").length 
+    const containerEl = $(hotspotEl).closest(".rlc-slide").length
       ? $(hotspotEl).closest(".rlc-slide")
       : $(hotspotEl).closest(".rlc-block");
     const lineCTA = containerEl.find(".rlc-linecta")[0];
@@ -498,7 +597,9 @@ function checkIfImageLinkSameAsCTA() {
     const imageLink = $(hotspotEl).attr("href");
     const CTALink = $(lineCTA).attr("href");
 
-    if(imageLink.includes('dwvar') || CTALink.includes('dwvar')) return
+    if (imageLink.includes("dwvar") || CTALink.includes("dwvar")) return;
+    const pidRegex = /\d{5,9}\.html$/;
+    if(pidRegex.test(imageLink) && pidRegex.test(CTALink)) return
 
     if (imageLink !== CTALink) {
       $(hotspotEl).find(".rlc-info-container .rlc-p").html(`
@@ -529,7 +630,7 @@ function toggleID() {
 
 function hideID() {
   $(
-    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container"
+    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container",
   ).hide();
   $(".rlc-pillbutton > .rlc-info-container").hide();
   $(".rlc-cta .rlc-info-container").hide();
@@ -544,14 +645,14 @@ function hideID() {
 
 function showID() {
   $(
-    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container"
+    ":where(.rlc-links, .rlc-hotspot, .rlc-bg_link, :where(.rlc-copygroup, .rlc-textgroup) :where(.rlc-pillbutton, .rlc-linecta, .rlc-target, a)) > .rlc-info-container, .rlc-linecta > .rlc-info-container, .rlc-target.is-quick-shoppable.rlc-qs_ready > .rlc-info-container, .rlc-buttongroup .rlc-links .rlc-pillbutton > .rlc-info-container, .plp-info-breadcrumb-path .breadcrumb-element > .rlc-info-container",
   ).each((i, el) => {
     addZIndexToCarousel(el);
 
     const container = $(el).closest(".rlc-imagery").length
       ? $(el).closest(".rlc-imagery")
       : $(el).closest(
-          ":where(.rlc-copygroup, .rlc-textgroup, .rlc-copygroup-in, rlc-textgroup-in)"
+          ":where(.rlc-copygroup, .rlc-textgroup, .rlc-copygroup-in, rlc-textgroup-in)",
         );
 
     showOverflow(container);
