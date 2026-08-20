@@ -485,100 +485,100 @@ function getLinkID(el) {
     ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
   `;
   } else {
-    console.log(el.href.split('/$')[1])
-  //   const urlPart = el.href.includes(".co.")
-  //     ? decodeURIComponent(el.href.split(".co")[1])
-  //     : decodeURIComponent(el.href.split(".com")[1]);
+    console.log(el.href.split("/$")[1]);
+    //   const urlPart = el.href.includes(".co.")
+    //     ? decodeURIComponent(el.href.split(".co")[1])
+    //     : decodeURIComponent(el.href.split(".com")[1]);
 
-  //   let cgid = null;
-  //   let tagging = null;
+    //   let cgid = null;
+    //   let tagging = null;
 
-  //   if (urlPart.includes("??")) {
-  //     return `
-  //     <span class="rlc-dev-err" data-type='cgid'>Multiple ?, please remove</span>
-  //   `;
-  //   }
+    //   if (urlPart.includes("??")) {
+    //     return `
+    //     <span class="rlc-dev-err" data-type='cgid'>Multiple ?, please remove</span>
+    //   `;
+    //   }
 
-  //   if (urlPart.includes("?")) {
-  //     [cgid, tagging] = urlPart?.split("?");
-  //   } else {
-  //     cgid = urlPart;
-  //   }
+    //   if (urlPart.includes("?")) {
+    //     [cgid, tagging] = urlPart?.split("?");
+    //   } else {
+    //     cgid = urlPart;
+    //   }
 
-  //   if (urlPart?.includes("search")) {
-  //     const searchQuery = urlPart.split("search")[1];
-  //     if (searchQuery === "" || searchQuery) {
-  //       cgid = `
-  //       <span class='rlc-dev-err' data-type='cgid'>
-  //         ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"} 
-  //         ${
-  //           searchQuery !== "" ? urlPart?.split("search?")[1].split("&")[0] : ""
-  //         }
-  //       </span>
-  //     `;
-  //     }
-  //   }
+    //   if (urlPart?.includes("search")) {
+    //     const searchQuery = urlPart.split("search")[1];
+    //     if (searchQuery === "" || searchQuery) {
+    //       cgid = `
+    //       <span class='rlc-dev-err' data-type='cgid'>
+    //         ${searchQuery === "" ? "missing CGID" : "invalid CGID: <br>"}
+    //         ${
+    //           searchQuery !== "" ? urlPart?.split("search?")[1].split("&")[0] : ""
+    //         }
+    //       </span>
+    //     `;
+    //     }
+    //   }
 
-  //   if (urlPart?.includes("ab=")) {
-  //     cgid = `
-  //     <span class='rlc-dev-err' data-type='ab-tag'>
-  //       contains ab tagging: <br>
-  //       ab=${urlPart.split("ab=")[1].split("&")[0]}
-  //     </span> <br>
-  //     ${cgid}
-  //   `;
-  //   }
+    //   if (urlPart?.includes("ab=")) {
+    //     cgid = `
+    //     <span class='rlc-dev-err' data-type='ab-tag'>
+    //       contains ab tagging: <br>
+    //       ab=${urlPart.split("ab=")[1].split("&")[0]}
+    //     </span> <br>
+    //     ${cgid}
+    //   `;
+    //   }
 
-  //   // PID handling
-  //   if (!!$(el).closest(".notfound").length) {
-  //     return `
-  //     <span class="rlc-dev-err" data-type='pid'>Invalid PID</span>
-  //   `;
-  //   }
+    //   // PID handling
+    //   if (!!$(el).closest(".notfound").length) {
+    //     return `
+    //     <span class="rlc-dev-err" data-type='pid'>Invalid PID</span>
+    //   `;
+    //   }
 
-  //   let pid = null;
-  //   let productColor = null;
+    //   let pid = null;
+    //   let productColor = null;
 
-  //   if (urlPart?.includes(".html")) {
-  //     if (urlPart?.includes("?")) {
-  //       const productInfo = urlPart.split(".html")[1];
-  //       pid = productInfo.split("_")[0]?.replace("?dwvar", "");
-  //       productColor = productInfo.split("_")[1]?.replace("colorname=", "");
-  //       if (productColor.includes("ab=")) {
-  //         productColor = productColor.split("?ab=")[0];
-  //       }
-  //     } else {
-  //       pid = urlPart.split("-").at(-1).replace(".html", "");
-  //     }
-  //     cgid = cgid.includes("contains ab tagging")
-  //       ? `
-  //     <span class='rlc-dev-err' data-type='ab-tag'>
-  //       contains ab tagging: <br>
-  //       ab=${urlPart.split("ab=")[1].split("&")[0]}
-  //     </span> 
-  //   `
-  //       : null;
-  //   }
-  //   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
-  //   const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
-  //   const filterValue = filter ? filter.split("&")[1].split("=")[1] : null;
+    //   if (urlPart?.includes(".html")) {
+    //     if (urlPart?.includes("?")) {
+    //       const productInfo = urlPart.split(".html")[1];
+    //       pid = productInfo.split("_")[0]?.replace("?dwvar", "");
+    //       productColor = productInfo.split("_")[1]?.replace("colorname=", "");
+    //       if (productColor.includes("ab=")) {
+    //         productColor = productColor.split("?ab=")[0];
+    //       }
+    //     } else {
+    //       pid = urlPart.split("-").at(-1).replace(".html", "");
+    //     }
+    //     cgid = cgid.includes("contains ab tagging")
+    //       ? `
+    //     <span class='rlc-dev-err' data-type='ab-tag'>
+    //       contains ab tagging: <br>
+    //       ab=${urlPart.split("ab=")[1].split("&")[0]}
+    //     </span>
+    //   `
+    //       : null;
+    //   }
+    //   const filter = tagging?.includes("prefn") ? tagging.split("?")[0] : null;
+    //   const filterName = filter ? filter.split("&")[0].split("=")[1] : null;
+    //   const filterValue = filter ? filter.split("&")[1].split("=")[1] : null;
 
-  //   const outOfStock = !!$(el).closest(".notinstock").length;
-  //   const comingSoon = !!$(el).find(".rlc-cs").length;
+    //   const outOfStock = !!$(el).closest(".notinstock").length;
+    //   const comingSoon = !!$(el).find(".rlc-cs").length;
 
-  //   return `
-  //   ${cgid ? cgid + "<br>" : ""}
-  //   ${pid ? "◻️ PID: " + pid : ""}
-  //   ${
-  //     pid && outOfStock
-  //       ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>'
-  //       : ""
-  //   }
-  //   ${pid && comingSoon ? '<span class="rlc-dev-err" data-type="pid">(Coming soon)</span>' : ""}
-  //   ${pid ? "<br>" : ""}
-  //   ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
-  //   ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
-  // `;
+    //   return `
+    //   ${cgid ? cgid + "<br>" : ""}
+    //   ${pid ? "◻️ PID: " + pid : ""}
+    //   ${
+    //     pid && outOfStock
+    //       ? '<span class="rlc-dev-err" data-type="pid">(Out of stock)</span>'
+    //       : ""
+    //   }
+    //   ${pid && comingSoon ? '<span class="rlc-dev-err" data-type="pid">(Coming soon)</span>' : ""}
+    //   ${pid ? "<br>" : ""}
+    //   ${productColor ? "◻️ Color: " + productColor + "<br>" : ""}
+    //   ${filter ? "◻️ Filter: " + filterName + " = " + filterValue + "<br>" : ""}
+    // `;
   }
 }
 
@@ -587,9 +587,22 @@ function checkIfImageLinkSameAsCTA() {
     `${window.caid} .rlc-hotspot, ${window.caid} .rlc-bg_link`,
   );
   hotspotEls.each((i, hotspotEl) => {
-    const containerEl = $(hotspotEl).closest(".rlc-slide").length
-      ? $(hotspotEl).closest(".rlc-slide")
-      : $(hotspotEl).closest(".rlc-block");
+    let containerEl = null;
+
+    if ($(hotspotEl).closest(".rlc-slide").length) {
+      containerEl = $(hotspotEl).closest(".rlc-slide");
+    }
+
+    if ($(hotspotEl).closest(".rlc-block").length) {
+      containerEl = $(hotspotEl).closest(".rlc-block");
+    }
+
+    if ($(hotspotEl).closest(".rlc-tile").length) {
+      containerEl = $(hotspotEl).closest(".rlc-tile");
+    }
+
+    if (containerEl === null) return;
+
     const lineCTA = containerEl.find(".rlc-linecta")[0];
 
     if (!lineCTA) return;
@@ -599,7 +612,7 @@ function checkIfImageLinkSameAsCTA() {
 
     if (imageLink.includes("dwvar") || CTALink.includes("dwvar")) return;
     const pidRegex = /\d{5,9}\.html$/;
-    if(pidRegex.test(imageLink) && pidRegex.test(CTALink)) return
+    if (pidRegex.test(imageLink) && pidRegex.test(CTALink)) return;
 
     if (imageLink !== CTALink) {
       $(hotspotEl).find(".rlc-info-container .rlc-p").html(`
